@@ -1,0 +1,122 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tcolorbox}
+\usepackage{diagbox}
+\usepackage[utf8]{inputenc}
+\usepackage[left=2cm, right=2cm, top=2cm]{geometry}
+\usepackage[final]{pdfpages}
+\usepackage{listings}%http://ctan.org/pkg/listings
+\lstset{
+  basicstyle=\ttfamily,
+  mathescape
+}
+
+\usepackage{amsthm}
+\theoremstyle{definition}
+\newtheorem{exmp}{Example}[section]
+
+\usepackage{gb4e}
+
+
+\newcommand{\wdd}[0]{d}
+\newcommand{\bdd}[0]{\delta}
+\title{Classification of distributed ternary labeling problems}
+\author{Tanguy Rocher}
+
+\usepackage{natbib}
+\usepackage{graphicx}
+
+\begin{document}
+\maketitle
+
+\section{Ternary labeling problems}
+\subsection{General Form}
+The alphabet of a \textit{ternary labelling problem} is $\Sigma = \{1,2,3\}$\\\\
+A \textit{ternary labelling problem} is a tuple $\Pi = (\wdd,\bdd,W,B)$ where :
+\begin{itemize}
+    \item $\wdd\in\{2,3,...\}$ is the \textit{white degree}
+    \item $\bdd\in\{2,3,...\}$ is the \textit{black degree}
+    \item $W$ is the \textit{white constraint}, a set of \textit{white configurations}
+    \item $B$ is the \textit{black constraint}, a set of \textit{black configurations}
+\end{itemize}
+Each \textit{white configuration} is a 3-tuple $(x_1,x_2,x_3)$ where $x_1+x_2+x_3 = \wdd$\\
+Each \textit{black configuration} is a 3-tuple $(x_1,x_2,x_3)$ where $x_1+x_2+x_3 = \bdd$\\\\
+The problem is solved correctly if :
+\begin{itemize}
+    \item Each edge is labelled with some label $l\in\Sigma$
+    \item For each white, resp. black, node, the tuple $(x_1,x_2, x_3)$, with $x_i$ the number of incident edges labelled with the label $i$, is a configuration contained in W, resp. B
+\end{itemize}
+\begin{exmp}
+(maximal-Matching). The maximal matching problem for $\Delta = \wdd = \bdd = 3$ can be described with regular expression as :
+\begin{itemize}
+    \item $W = MO^{2}|P^{3}$
+    \item $B = M[OP]^{2}|O^{3}$
+\end{itemize}
+We can then describe the problem using the previous notation as
+$\Pi = (3,3,W,B)$ with :
+\begin{itemize}
+    \item $W = \{(0,0,3),(1, 2, 0)\}$
+    \item $B = \{(0,3,0),(1,2,0),(1,1,1),(1,0,2)\}$
+\end{itemize}
+(we did here the following "mapping" : $M\rightarrow 1, O\rightarrow 2, P\rightarrow 3$)
+\end{exmp}
+\subsection{Alphabets}
+The alphabet of the white constraint of a given problem is the subset of the labels used in all the white configurations, we denote it $A_w$. Similarly, the alphabet of the black constraint is denoted $A_b$\\\\
+The effective alphabet of the problem is the union between the alphabet of the white constraint and the black constraint $A = A_w \cup A_b \subseteq \Sigma$
+\newpage
+\begin{exmp}
+Let $\Pi = (2,3,W,B)$ with :
+\begin{itemize}
+    \item $W = \{(0,0,2)\}$
+    \item $B = \{(0,0,3),(0,2,1)\}$
+\end{itemize}
+The white alphabet is $\{3\}$, the black alphabet is $\{2,3\}$, the effective alphabet is then $\{2,3\}$
+\end{exmp}
+\subsection{Equivalence}
+As we can see in the example 1.1, the introduced notation can represent a problem, however, it is not the only way to represent it since another "mapping" could have been done leading to another representation of the problem. This subsection does then state the conditions for two problems to be equivalent.\\\\
+If X is a set of 3-tuple $(x_1,x_2, x_3)$, we denote $X_{a,b,c}$ the set that contains all the 3-tuple $(x_a,x_b, x_c)$ such that $(x_1,x_2, x_3)\in X$  $a,b,c$ being a permutation of $(1,2,3) $\\\\
+The followings problems have the same complexity up to +/- 1 round : 
+\begin{itemize}
+    \item $\Pi_0 = (\wdd,\bdd,W,B)$
+    \item $\Pi_1 = (\bdd,\wdd,B,W)$
+    \item $\Pi_2 \in \{(\wdd,\bdd,W_{a,b,c},B_{a,b,c}) | a,b,c \in permutations(1,2,3)\}$
+    \item $\Pi_3 \in \{(\bdd,\wdd,B_{a,b,c},W_{a,b,c}) | a,b,c \in permutations(1,2,3)\}$
+\end{itemize}
+\subsection{Restrictions, Relaxations}
+A problem $\Pi_1 = (\wdd,\bdd,W_1,B_1)$ is a \textit{restriction} of a problem $\Pi_2 = (\wdd,\bdd,W_2,B_2)$ (and $\Pi_2$ is a relaxation of $\Pi_1$) if and only if $W_1\subseteq W_2$ and $B_1\subseteq B_2$
+\section{Classifier}
+\subsection{Generation of the problems}
+We first generate all the possible white (resp. black) configurations by computing all the 3-tuple $(x_1,x_2, x_3)$ such that the 3 integer sum to $\wdd$ (resp. $\bdd$).
+The powerset of this set will then be the set of all the possible \textit{white (resp. black) constraints}.
+The cartesian product between the set of white constraints and the set of black constraints represent all possible problems. The following table represent the number of problems depending on $\wdd$ and $\bdd$
+\begin{center}
+\begin{tabular}{ | c | c | c | c |}
+ \hline
+ \diagbox{$\wdd$}{$\bdd$} & 2 & 3 & 4 \\ 
+ \hline
+ 2 & 4096 & 65536 & 2097152\\
+ \hline
+ 3 &  & 1048576 & 33554432\\
+ \hline
+ 4 &  &  &  1073741824\\
+\hline
+\end{tabular}
+\end{center}
+\subsection{Classification of a problem}
+Suppose we have some lower-bound of the complexity $l$ of a problem $\Pi$. We should follow the following steps:
+\begin{itemize}
+    \item Compute the set of the equivalents problems to $\Pi$
+    \item For each element of the equivalents problems set, if there was a previously attributed lower-bound on the problem that was lower than the new one, replace it by $l$
+    \item For all the problems that are a restriction of any problems of the equivalent problems set, set its lower-bound to $l$
+\end{itemize}
+Suppose we have some upper-bound of the complexity $u$ of a problem $\Pi$. We should follow the following steps:
+\begin{itemize}
+    \item Compute the set of the equivalents problems to $\Pi$
+    \item For each element of the equivalents problems set, if there was a previously attributed upper-bound on the problem that was bigger than the new one, replace it by $u$
+    \item For all the problems that are a relaxation of any problems of the equivalent problems set, set its upper-bound to $u$
+\end{itemize}
+Setting a complexity $c$ to a problem is then similar to applying both of theses process to the problem.sd
+sdgsjl
+\end{document}
+
