@@ -83,6 +83,8 @@ The followings problems have the same complexity up to +/- 1 round :
     \item $\Pi_2 \in \{(\wdd,\bdd,W_{a,b,c},B_{a,b,c}) | a,b,c \in permutations(1,2,3)\}$
     \item $\Pi_3 \in \{(\bdd,\wdd,B_{a,b,c},W_{a,b,c}) | a,b,c \in permutations(1,2,3)\}$
 \end{itemize}
+\subsection{Characteristic problem}
+The characteristic problem $\Pi_c$ of set of equivalents problems will be used to represent them all in order to reduce the database of problem. It is found by sorting each of the white and black list of configurations of the problems in the equivalent list by numerical order and then sorting the least to take the first problem in it.
 \subsection{Restrictions, Relaxations}
 A problem $\Pi_1 = (\wdd,\bdd,W_1,B_1)$ is a \textit{restriction} of a problem $\Pi_2 = (\wdd,\bdd,W_2,B_2)$ (and $\Pi_2$ is a relaxation of $\Pi_1$) if and only if $W_1\subseteq W_2$ and $B_1\subseteq B_2$
 \section{Classifier}
@@ -103,6 +105,21 @@ The cartesian product between the set of white constraints and the set of black 
 \hline
 \end{tabular}
 \end{center}
+However in order to reduce the data set and avoid to classify problems that are equivalents, we can only keep characteristics problems. This lead to the following number of problems presented in the following table, still depending on $\wss$ and $\bdd$
+\begin{center}
+\begin{tabular}{ | c | c | c | c |}
+ \hline
+ \diagbox{$\wdd$}{$\bdd$} & 2 & 3 & 4 \\ 
+ \hline
+ 2 & 430 & 11456 & 353664\\
+ \hline
+ 3 &  & 88792 & ?\\
+ \hline
+ 4 &  &  &  ?\\
+\hline
+\end{tabular}
+\end{center}
+We can observe a set of problems 6 times smaller when $\wdd \neq \bdd$ (due to removing 5 of the 6 different permutations of the configurations tuples to only keep the characteristic problem) and 12 times smaller when $\wdd=\bdd$ due to the additional white/black symmetry
 \subsection{Classification of a problem}
 Suppose we have some lower-bound of the complexity $l$ of a problem $\Pi$. We should follow the following steps:
 \begin{itemize}
@@ -116,7 +133,21 @@ Suppose we have some upper-bound of the complexity $u$ of a problem $\Pi$. We sh
     \item For each element of the equivalents problems set, if there was a previously attributed upper-bound on the problem that was bigger than the new one, replace it by $u$
     \item For all the problems that are a relaxation of any problems of the equivalent problems set, set its upper-bound to $u$
 \end{itemize}
-Setting a complexity $c$ to a problem is then similar to applying both of theses process to the problem.sd
-sdgsjl
-\end{document}
+Setting a complexity $c$ to a problem is then similar to applying both of theses process to the problem.
+\subsection{The constraint reduction algorithm}
+The following algorithm consist in removing all the white and black configurations of a problem that cannot be used by a node. It appear that it can be used to show the solvability  of a problem, however it is also useful to have a better understanding of a problem still unclassified.
+\begin{itemize}
+    \item We start by looking at the set $S$ of labels that are in $A_w$ or in $A_b$ but not in $A$.
+    \item For each labels $l$ present in $S$ we know that no node can use a configuration containing $l$ since one of its neighbors would have to have a corresponding configurations also containing $l$ which is impossible by construction of $S$.
+    \item We hence know that all the white or black configurations containing any labels of $S$ will never be used, we can then remove the from the white and black constraint sets
+    \item It is now possible to repeat this procedure on the new white and black constraints sets until one of them is empty which would mean that the problem is unsolvable, or $S$ is empty, which would then induce that the problem is solvable
+\end{itemize}
+\subsection{Unsolvable problems}
+The algorithms presented in the previous section show the solvability of a problem. It is then enough to run it on all the problem of the data set to obtain the subsets of them that are not solvable. 
+\subsection{Constant problems}
 
+\subsection{Global problems}
+\subsection{Logarithmic problems}
+\subsection{Iterated-logarithmic problems}
+
+\end{document}
