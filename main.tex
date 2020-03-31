@@ -3,6 +3,13 @@
 \usepackage{amssymb}
 \usepackage{tcolorbox}
 \usepackage{diagbox}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=blue,      
+    urlcolor=blue,
+}
 \usepackage[utf8]{inputenc}
 \usepackage[left=2cm, right=2cm, top=2cm]{geometry}
 \usepackage[final]{pdfpages}
@@ -32,7 +39,7 @@
 
 \section{Ternary labeling problems}
 \subsection{General Form}
-The alphabet of a \textit{ternary labelling problem} is $\Sigma = \{1,2,3\}$\\\\
+The alphabet of a \textit{ternary labelling problem} is $\Sigma = \{0,1,2\}$\\\\
 A \textit{ternary labelling problem} is a tuple $\Pi = (\wdd,\bdd,W,B)$ where :
 \begin{itemize}
     \item $\wdd\in\{2,3,...\}$ is the \textit{white degree}
@@ -59,11 +66,11 @@ $\Pi = (3,3,W,B)$ with :
     \item $W = \{(0,0,3),(1, 2, 0)\}$
     \item $B = \{(0,3,0),(1,2,0),(1,1,1),(1,0,2)\}$
 \end{itemize}
-(we did here the following "mapping" : $M\rightarrow 1, O\rightarrow 2, P\rightarrow 3$)
+(we did here the following "mapping" : $M\rightarrow 0, O\rightarrow 1, P\rightarrow 2$)
 \end{exmp}
 \subsection{Alphabets}
 The alphabet of the white constraint of a given problem is the subset of the labels used in all the white configurations, we denote it $A_w$. Similarly, the alphabet of the black constraint is denoted $A_b$\\\\
-The effective alphabet of the problem is the union between the alphabet of the white constraint and the black constraint $A = A_w \cup A_b \subseteq \Sigma$
+The effective alphabet of the problem is the union between the alphabet of the white constraint and the black constraint $A = A_w \cup A_b \subseteq \Sigma$. It correspond to the labels used by the problem.
 \newpage
 \begin{exmp}
 Let $\Pi = (2,3,W,B)$ with :
@@ -74,21 +81,43 @@ Let $\Pi = (2,3,W,B)$ with :
 The white alphabet is $\{3\}$, the black alphabet is $\{2,3\}$, the effective alphabet is then $\{2,3\}$
 \end{exmp}
 \subsection{Equivalence}
-As we can see in the example 1.1, the introduced notation can represent a problem, however, it is not the only way to represent it since another "mapping" could have been done leading to another representation of the problem. This subsection does then state the conditions for two problems to be equivalent.\\\\
+As we can see in the example 1.1, the introduced notation can represent a problem, however, it is not the only way to represent it since another "mapping" could have been done leading to another representation of the problem. This subsection does then state the conditions for two representations of the problem to be equivalent.\\\\
 If X is a set of 3-tuple $(x_1,x_2, x_3)$, we denote $X_{a,b,c}$ the set that contains all the 3-tuple $(x_a,x_b, x_c)$ such that $(x_1,x_2, x_3)\in X$  $a,b,c$ being a permutation of $(1,2,3) $\\\\
 The followings problems have the same complexity up to +/- 1 round : 
 \begin{itemize}
     \item $\Pi_0 = (\wdd,\bdd,W,B)$
     \item $\Pi_1 = (\bdd,\wdd,B,W)$
-    \item $\Pi_2 \in \{(\wdd,\bdd,W_{a,b,c},B_{a,b,c}) | a,b,c \in permutations(1,2,3)\}$
-    \item $\Pi_3 \in \{(\bdd,\wdd,B_{a,b,c},W_{a,b,c}) | a,b,c \in permutations(1,2,3)\}$
+    \item $\Pi_2 = (\wdd,\bdd,W_{a,b,c},B_{a,b,c})$
+    \item $\Pi_3 = (\bdd,\wdd,B_{a,b,c},W_{a,b,c})$
 \end{itemize}
-\subsection{Characteristic problem}
-The characteristic problem $\Pi_c$ of set of equivalents problems will be used to represent them all in order to reduce the database of problem. It is found by sorting each of the white and black list of configurations of the problems in the equivalent list by numerical order and then sorting the least to take the first problem in it.
+with $a,b,c \in permutations(1,2,3)$
+\begin{exmp}
+The following problem with $\wdd = 2$ and $\bdd = 3$ :
+\begin{itemize}
+    \item $W = BC|AA$
+    \item $B = B(CC|BA|BC)$
+\end{itemize}
+Can be described as :
+$\Pi = (2,3,W,B)$ with $(W,B)$ or $(B,W)$ being one of the following tuple:\\\\
+\begin{array}{cc}
+    $( \{(0,1,1),(2, 0, 0)\}$ &  $\{(0,1,2),(1,2,0),(0,2,1)\} )$\\
+    $( \{(1,0,1),(0, 2, 0)\}$ &  $\{(2,0,1),(0,1,2),(1,0,2)\} )$\\
+    $( \{(1,1,0),(0, 0, 2)\}$ &  $\{(1,2,0),(2,0,1),(2,1,0)\} )$\\
+    $( \{(0,1,1),(2, 0, 0)\}$ &  $\{(0,2,1),(1,0,2),(0,1,2)\} )$\\
+    $( \{(1,0,1),(0, 2, 0)\}$ &  $\{(1,0,2),(2,1,0),(2,0,1)\} )$\\
+    $( \{(1,1,0),(0, 0, 2)\}$ &  $\{(2,1,0),(0,2,1),(1,2,0)\} )$
+\end{array}
+\end{exmp}
+\subsection{Representative problem}
+The representative problem $\Pi_c$ of set of equivalents problems will be used to represent them all in order to reduce the database size. It is found by sorting each of the white and black list of configurations of the problems in the equivalent list by alpha-numerical order and then sorting the list of problems to take the first problem in it.
+\begin{exmp}
+Considering the previous example,
+\end{exmp}
 \subsection{Restrictions, Relaxations}
 A problem $\Pi_1 = (\wdd,\bdd,W_1,B_1)$ is a \textit{restriction} of a problem $\Pi_2 = (\wdd,\bdd,W_2,B_2)$ (and $\Pi_2$ is a relaxation of $\Pi_1$) if and only if $W_1\subseteq W_2$ and $B_1\subseteq B_2$
 \section{Classifier}
 \subsection{Generation of the problems}
+\subsubsection{Non-reduced data-set}
 We first generate all the possible white (resp. black) configurations by computing all the 3-tuple $(x_1,x_2, x_3)$ such that the 3 integer sum to $\wdd$ (resp. $\bdd$).
 The powerset of this set will then be the set of all the possible \textit{white (resp. black) constraints}.
 The cartesian product between the set of white constraints and the set of black constraints represent all possible problems. The following table represent the number of problems depending on $\wdd$ and $\bdd$
@@ -105,7 +134,8 @@ The cartesian product between the set of white constraints and the set of black 
 \hline
 \end{tabular}
 \end{center}
-However in order to reduce the data set and avoid to classify problems that are equivalents, we can only keep characteristics problems. This lead to the following number of problems presented in the following table, still depending on $\wss$ and $\bdd$
+\subsubsection{Representative Dataset}
+In order to reduce the data set and avoid to classify problems that are equivalents, for each equivalence set of problems, we can only keep the representative problems. This lead to the following number of problems presented in the following table, still depending on $\wdd$ and $\bdd$
 \begin{center}
 \begin{tabular}{ | c | c | c | c |}
  \hline
@@ -120,34 +150,69 @@ However in order to reduce the data set and avoid to classify problems that are 
 \end{tabular}
 \end{center}
 We can observe a set of problems 6 times smaller when $\wdd \neq \bdd$ (due to removing 5 of the 6 different permutations of the configurations tuples to only keep the characteristic problem) and 12 times smaller when $\wdd=\bdd$ due to the additional white/black symmetry
+\subsubsection{The constraint reduction algorithm}
+
+We can apply the previous algorithm to each of the problems of the data-set in order to reduce it again since a problem with such "useless" configurations has an equivalent complexity of the same problem reduced to only its "useful" configurations.\\
+This lead to the following number of problems presented in the table, again depending on $\wdd$ and $\bdd$:
+\begin{center}
+\begin{tabular}{ | c | c | c | c |}
+ \hline
+ \diagbox{$\wdd$}{$\bdd$} & 2 & 3 & 4 \\ 
+ \hline
+ 2 & 248 & 7962 & \\
+ \hline
+ 3 &  & 81694 & ?\\
+ \hline
+ 4 &  &  &  ?\\
+\hline
+\end{tabular}
+\end{center}
 \subsection{Classification of a problem}
 Suppose we have some lower-bound of the complexity $l$ of a problem $\Pi$. We should follow the following steps:
 \begin{itemize}
     \item Compute the set of the equivalents problems to $\Pi$
-    \item For each element of the equivalents problems set, if there was a previously attributed lower-bound on the problem that was lower than the new one, replace it by $l$
-    \item For all the problems that are a restriction of any problems of the equivalent problems set, set its lower-bound to $l$
+    \item If the problem had a previously attributed lower-bound on the problem that was smaller than the new one, replace it by $l$ if it had a previously attributed upper-bound that is smaller than the new lower-bound, there must be an error.
+    \item For all the problems that are a restriction of any problems of the set of equivalent of the problem, set its lower-bound to $l$
 \end{itemize}
 Suppose we have some upper-bound of the complexity $u$ of a problem $\Pi$. We should follow the following steps:
 \begin{itemize}
-    \item Compute the set of the equivalents problems to $\Pi$
-    \item For each element of the equivalents problems set, if there was a previously attributed upper-bound on the problem that was bigger than the new one, replace it by $u$
-    \item For all the problems that are a relaxation of any problems of the equivalent problems set, set its upper-bound to $u$
+    \item If the problem had a previously attributed upper-bound on the problem that was bigger than the new one, replace it by $u$
+    \item For all the problems that are a relaxation of any problems of the set of equivalent of the problem, set its upper-bound to $u$
 \end{itemize}
 Setting a complexity $c$ to a problem is then similar to applying both of theses process to the problem.
-\subsection{The constraint reduction algorithm}
+\subsection{Algorithms}
+\subsubsection{Constraint Reduction}
 The following algorithm consist in removing all the white and black configurations of a problem that cannot be used by a node. It appear that it can be used to show the solvability  of a problem, however it is also useful to have a better understanding of a problem still unclassified.
 \begin{itemize}
-    \item We start by looking at the set $S$ of labels that are in $A_w$ or in $A_b$ but not in $A$.
+    \item We start by looking at the set $S$ of labels that are in $A_w \cup A_b$ but not in $A$.
     \item For each labels $l$ present in $S$ we know that no node can use a configuration containing $l$ since one of its neighbors would have to have a corresponding configurations also containing $l$ which is impossible by construction of $S$.
-    \item We hence know that all the white or black configurations containing any labels of $S$ will never be used, we can then remove the from the white and black constraint sets
-    \item It is now possible to repeat this procedure on the new white and black constraints sets until one of them is empty which would mean that the problem is unsolvable, or $S$ is empty, which would then induce that the problem is solvable
+    \item We hence know that all the white or black configurations containing any labels of $S$ will never be used, we can then safely remove them from the white and black constraint sets
+    \item It is now possible to repeat this procedure on the new white and black constraints sets until one of them is empty which would mean that the problem is unsolvable, or $S$ is empty, which would then induce that the resultant problem is solvable
 \end{itemize}
+\subsubsection{Redundancy elimination}
+We describe a condition on a problem with $|A|=3$ for it to be equivalent to a problem with $|A|=2$.\\
+A label $l_1$ is defined to be redundant in a problem $\Pi_1 = (\wdd,\bdd,W_1,B_1)$ if there exists another label $l_2$ such that :
+\begin{itemize}
+    \item For every element e in $W_1$ there exists another element that keeps $l_2$ unchanged but does now not use $l_1$
+    \item For every element e in $B_1$ there exists another element that keeps $l_2$ unchanged but does now not use $l_1$
+\end{itemize}
+The problem $\Pi_2 = (\wdd,\bdd,W_2,B_2)$ with :
+\begin{itemize}
+    \item $W_2$ = $ \{x \in W_1$ \hbox{ s.t. } $x_{l_1} > 0$\}
+    \item $B_2$ = $ \{x \in B_1$ \hbox{ s.t. } $x_{l_1} > 0$\}
+\end{itemize}
+is then equivalent to $P_1$
+\subsubsection{Looping Labels}
+\subsubsection{Greedy4Coloring}
+\subsection{Binary Labeling problems}
+The implemented results of \cite{1} gives a complete complexity classification of the problems using 1 or 2 labels. It also provides some useful upper bounds for relaxations of theses problems.
 \subsection{Unsolvable problems}
-The algorithms presented in the previous section show the solvability of a problem. It is then enough to run it on all the problem of the data set to obtain the subsets of them that are not solvable. 
+The Constraint Reduction algorithms presented previously show the solvability of a problem. It is then enough to run it on all the problem of the data set to obtain the subsets of them that are not solvable.
 \subsection{Constant problems}
 
 \subsection{Global problems}
 \subsection{Logarithmic problems}
 \subsection{Iterated-logarithmic problems}
-
+\bibliographystyle{plain}
+\bibliography{bib}
 \end{document}
