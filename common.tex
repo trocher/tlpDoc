@@ -1,0 +1,36 @@
+%!TEX root = main.tex
+\documentclass[12pt]{report}
+
+\usepackage{amsmath}
+%\usepackage{gb4e}
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{titlesec}
+\usepackage{amssymb}
+\usepackage{tcolorbox}
+\usepackage{diagbox}
+\usepackage{hyperref}
+\usepackage[dvipsnames]{xcolor}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=blue,      
+    urlcolor=blue,
+}
+\usepackage[utf8]{inputenc}
+\usepackage[left=2cm, right=2cm, top=2cm]{geometry}
+\usepackage[final]{pdfpages}
+\usepackage{listings}%http://ctan.org/pkg/listings
+\lstset{
+  basicstyle=\ttfamily,
+  mathescape
+}
+
+\usepackage{amsthm}
+\theoremstyle{definition}
+\newtheorem{exmp}{Example}[section]
+
+\newcommand{\wdd}[0]{d}
+\newcommand{\bdd}[0]{\delta}
+ 
+\titleformat{\chapter}[display]{\normalfont\bfseries}{}{0pt}{\Huge}

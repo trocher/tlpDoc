@@ -1,0 +1,75 @@
+%!TEX root = main.tex
+\subsection{Generation of the problems}
+\subsubsection{Non-reduced data-set}
+We first generate all the possible white (resp. black) configurations by computing all the 3-tuple $(x_1,x_2, x_3)$ such that the 3 integer sum to $\wdd$ (resp. $\bdd$).
+The powerset of this set will then be the set of all the possible \textit{white (resp. black) constraints}.
+The cartesian product between the set of white constraints and the set of black constraints represent all possible problems. The following table represent the number of problems depending on $\wdd$ and $\bdd$
+\begin{center}
+\begin{tabular}{ | c | c | c | c |}
+ \hline
+ \diagbox{$\wdd$}{$\bdd$} & 2 & 3 & 4 \\ 
+ \hline
+ 2 & 4096 & 65536 & 2097152\\
+ \hline
+ 3 &  & 1048576 & 33554432\\
+ \hline
+ 4 &  &  &  1073741824\\
+\hline
+\end{tabular}
+\end{center}
+\subsubsection{Representative Dataset}
+In order to reduce the data set and avoid to classify problems that are equivalents, for each equivalence set of problems, we can only keep the representative problems. This lead to the following number of problems presented in the following table, still depending on $\wdd$ and $\bdd$
+\begin{center}
+\begin{tabular}{ | c | c | c | c |}
+ \hline
+ \diagbox{$\wdd$}{$\bdd$} & 2 & 3 & 4 \\ 
+ \hline
+ 2 & 430 & 11456 & 353664\\
+ \hline
+ 3 &  & 88792 & ?\\
+ \hline
+ 4 &  &  &  ?\\
+\hline
+\end{tabular}
+\end{center}
+We can observe a set of problems 6 times smaller when $\wdd \neq \bdd$ (due to removing 5 of the 6 different permutations of the configurations tuples to only keep the characteristic problem) and 12 times smaller when $\wdd=\bdd$ due to the additional white/black symmetry
+\subsubsection{The constraint reduction algorithm}
+
+We can apply the previous algorithm to each of the problems of the data-set in order to reduce it again since a problem with such "useless" configurations has an equivalent complexity of the same problem reduced to only its "useful" configurations.\\
+This lead to the following number of problems presented in the table, again depending on $\wdd$ and $\bdd$:
+\begin{center}
+\begin{tabular}{ | c | c | c | c |}
+ \hline
+ \diagbox{$\wdd$}{$\bdd$} & 2 & 3 & 4 \\ 
+ \hline
+ 2 & 248 & 7962 & \\
+ \hline
+ 3 &  & 81694 & ?\\
+ \hline
+ 4 &  &  &  ?\\
+\hline
+\end{tabular}
+\end{center}
+\subsection{Classification of a problem}
+Suppose we have some lower-bound of the complexity $l$ of a problem $\Pi$. We should follow the following steps:
+\begin{itemize}
+    \item Compute the set of the equivalents problems to $\Pi$
+    \item If the problem had a previously attributed lower-bound on the problem that was smaller than the new one, replace it by $l$ if it had a previously attributed upper-bound that is smaller than the new lower-bound, there must be an error.
+    \item For all the problems that are a restriction of any problems of the set of equivalent of the problem, set its lower-bound to $l$
+\end{itemize}
+Suppose we have some upper-bound of the complexity $u$ of a problem $\Pi$. We should follow the following steps:
+\begin{itemize}
+    \item If the problem had a previously attributed upper-bound on the problem that was bigger than the new one, replace it by $u$
+    \item For all the problems that are a relaxation of any problems of the set of equivalent of the problem, set its upper-bound to $u$
+\end{itemize}
+Setting a complexity $c$ to a problem is then similar to applying both of theses process to the problem.
+\subsection{Algorithms}
+\subsubsection{Constraint Reduction}
+The following algorithm consist in removing all the white and black configurations of a problem that cannot be used by any node. It appear that it can be used to show the solvability  of a problem as it will be showed later, however it is also useful to have a better understanding of a problem still unclassified.
+\begin{itemize}
+    \item The algorithm take as input a problem $\Pi = (\wdd,\bdd,W,B)$
+    \item We start by looking at the set $S$ of labels that are in $A_{\Pi}$ but not in  $A_{\Pi,w} \cap A_{\Pi,b}$.
+    \item For each labels $l$ present in $S$ we know that no node can use a configuration containing $l$ since one of its neighbors would have to have a corresponding configurations also containing $l$ which is impossible by construction of $S$.
+    \item We hence know that all the white or black configurations containing any labels of $S$ will never be used, we can then safely remove them from the white and black constraint sets without modifying the problem.
+    \item It is now possible to repeat this procedure on the new white and black constraints sets obtained until either one of them is empty or $S$ is empty
+\end{itemize}

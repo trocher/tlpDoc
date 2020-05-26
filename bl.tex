@@ -1,0 +1,41 @@
+%!TEX root = main.tex
+A complete complexity classification of the problems using 1 or 2 labels already exists \cite{1}. In the case of the problems that are using 3 labels theses result will be useful in two ways :
+\begin{itemize}
+    \item It provide some useful upper bounds for relaxations of theses problems that are using 3 labels.
+    \item As we will see, some 3-labelling problems can be reduced to 2-labelling problems since they some of the labels are in fact redundant.
+\end{itemize}
+\subsubsection{Redundant labels}
+The idea here is that in some problems with $|A_{\Pi}|=3$, we could remove every configuration that use a label $l_i$ without changing the complexity of the problem.\\
+In order to do that, there must be a label $l_j\neq l_i$ such that for every configuration $c=(x_{l_1},x_{l_2},x_{l_3})$ using $l_i$, there must exists another configuration $c'=(x_{l_1'},x_{l_2'},x_{l_3'})$ such that : 
+\begin{itemize}
+    \item $l_i'=0$
+    \item $l_j'= l_j+l_i$
+    \item $l_k' = l_k$ where $ k = \Sigma \setminus \{l_i,l_j\}$ 
+\end{itemize}
+In other word, each time a node is using a configuration using $l_i$ it could safely switch to a similar configuration using $l_j$ instead of $l_i$. Hence it appear that if we remove all the configurations using $l_i$ the new binary labelling problem obtained will have the same complexity since $l_i$ was redundant.
+\begin{exmp}
+Let $\Pi$ be the following problem with $\wdd = 3$ and $\bdd = 2$ :
+\begin{itemize}
+    \item $W = ABB, BBC, BCC, CCC, AAA, BBB, ACC, ABC$
+    \item $B = AC, AB$
+\end{itemize}
+Can be described as :
+Let's show that C is redundant in this problem and can be replaced by B:\\\\
+In the black constraint, $AC$ is the only configuration using $C$, we can use $AB$ instead (the $C$ is replaced by $B$\\
+In the white constraint :
+\begin{itemize}
+    \item $BB\textbf{C} \rightarrow BB\textbf{B}$
+    \item $B\textbf{CC} \rightarrow B\textbf{BB}$
+    \item $\textbf{CCC} \rightarrow \textbf{BBB}$
+    \item $A\textbf{CC} \rightarrow A\textbf{BB}$
+    \item $AB\textbf{C} \rightarrow AB\textbf{B}$
+\end{itemize}
+We can see that each new configuration obtained by replacing $C$ by $B$ is indeed in the black constraint.\\
+We can now construct a binary labelling problem $\Pi'$ equivalent to $\Pi$ :\\
+$\Pi'=(3,\bdd,W',B')$ with :
+\begin{itemize}
+    \item $W' = ABB, AAA, BBB$
+    \item $B' = AB$
+\end{itemize}
+W' and B' being W and B minus all the configurations using $C$
+\end{exmp}
