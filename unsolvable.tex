@@ -1,17 +1,23 @@
-%!TEX root = tlp.tex
-\subsection{Unsolvable problems}
-The Constraint Reduction algorithms presented previously can show the solvability of a given problem, we will show it here.\\\\
+%!TEX root = main.tex
+\section{The constraint reduction}
+The Constraint Reduction algorithm presented \hyperref[sec:CR]{\textbf{previously}} can show the solvability of a given problem, we will show it here.\\\\
 Let's take a problem $\Pi = (\wdd,\bdd,W,B)$. After running the constraint reduction algorithm on $\Pi$, we obtain an equivalent problem $\Pi' = (\wdd,\bdd,W',B')$ we can have two different outputs :
 \begin{itemize}
-    \item $|W'| = 0$ or $|B'| = 0$ : \\\\
+    \item $|W'| = 0$ or $|B'| = 0$ :
+    
     In this case, it seems pretty obvious that $\Pi' = (\wdd,\bdd,W',B')$ cannot be solved since for either the white nodes, either the black nodes, we cannot assign any configuration, since $\Pi'$ is equivalent to $\Pi$, it appear that $\Pi$ is unsolvable as well.
-    \item  $|W'| > 0$ and $|B'| > 0$: \\\\
+    \item  $|W'| > 0$ and $|B'| > 0$:
+    
     In this case, we are going to prove that $\Pi$ must be solvable by showing an algorithm that solve it:
     \begin{itemize}
         \item We elect a white leader in the graph using $GATHER$
-        \item The leader choose any configuration in $W$
-        \item Each time a white (resp. black) node $u$ in the graph has a complete labelling of its adjacent edges, it send, to each of its neighbors $v_i$, $i\in\wdd$ (resp. $i\in\bdd$) the label of their common edge $(u,v_i)$. $u$ does not does anything else after.
-        \item Each time a white (resp. black) node $v$ receive such a label $l$, it find a configuration $c$ in $W$ (resp. $B$) that contains $l$ and labels all its other incidents edges with the other labels of $c$
+        \item The leader choose any configuration in $W'$ (this is possible since $|W'|>0$
+        \item Each time a white (resp. black) node $u$ in the graph has a complete labelling of its adjacent edges, it send, to each of its neighbors $v_i$, $i\in\wdd$ (resp. $i\in\bdd$) the label $l$ of their common edge $(u,v_i)$. $u$ does not does anything else after.
+        \item Each time a white (resp. black) node $v$ receive such a label $l$, it find a configuration $c$ in $W$ (resp. $B$) that contains $l$ and labels all its other incidents edges with the other labels of $c$. Note that finding such a configuration is possible since by construction, if $W'$(resp. $B'$) contains a configuration with $l$, $B'$ (resp. $W'$) must contain a configuration with $l$
     \end{itemize}
-    At some point, the graph should be fully labelled even if it took $O(n)$ time to do it. Remember that since the graph is a tree, a given un-visited node can only have 1 neighbor that has labelled their common edge.
 \end{itemize}
+
+At some point, the graph should be fully labelled even if it took $\mathcal{O}(n)$ time to do it. Remember that since the graph is a tree, a given un-visited node can only have 1 neighbor that has labelled their common edge at some point of time, there is hence no conflict in the labelling.
+
+\section{Results}
+Using the constraint reduction algorithm hence lead to a fully classification of the unsolvable problems, the other problems must have a complexity  $\mathcal{O}(n)$. In the case $\wdd = 3, \bdd = 2$, we found that 227 out of 7962 problems are unsolvable.

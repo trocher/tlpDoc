@@ -15,13 +15,33 @@ The problem is solved correctly if :
     \item Each edge is labelled with some label $l\in\Sigma$
     \item For each white, resp. black, node, the tuple $(x_1,x_2, x_3)$, with $x_i$ the number of incident edges labelled with the label $i$, is a configuration contained in W, resp. B
 \end{itemize}
+
+\subsection{Alpha Form}
+The general form presented above has been chosen for its with the classifier, however, We can describe a problem $\Pi$ in a more readable form using regular expressions \cite{1,LB_MM} to represent the sets of configurations (constraints).
+\begin{itemize}
+    \item $\wdd\in\{2,3,...\}$ is the \textit{white degree}
+    \item $\bdd\in\{2,3,...\}$ is the \textit{black degree}
+    \item $W$ is the \textit{white constraint}, a set of \textit{white configurations}
+    \item $B$ is the \textit{black constraint}, a set of \textit{black configurations}
+\end{itemize}
+Each \textit{white configuration}  and \textit{black configuration} is a multiset containing exactly $\wdd$ (resp. $\bdd$) labels (not necessarily distinct) from $\Sigma$ also know as regular expressions\\\\
+The problem is solved correctly if :
+\begin{itemize}
+    \item Each edge is labelled with some label $l\in\Sigma$
+    \item For each white, resp. black, node, the tuple $(x_1,x_2, ..., x_k)$ (with $k=\wdd$, resp. $k=\bdd$) of incident edges labels is a configuration contained in W, resp. B.
+\end{itemize}
+We also use the following notations for defining configurations :
+\begin{itemize}
+    \item $[x_1x_2,...x_k] = x1|x_2|...|x_k$
+    \item $x^k$ for x repeated k times
+\end{itemize}
 \begin{exmp}
-(maximal-Matching). The maximal matching problem for $\Delta = \wdd = \bdd = 3$ can be described with regular expression as :
+(maximal-Matching). The maximal matching problem for $\Delta = \wdd = \bdd = 3$ can be described in the alpha form as :
 \begin{itemize}
     \item $W = MO^{2}|P^{3}$
     \item $B = M[OP]^{2}|O^{3}$
 \end{itemize}
-We can then describe the problem using the previous notation as
+We can then describe the problem using the general form as
 $\Pi = (3,3,W,B)$ with :
 \begin{itemize}
     \item $W = \{(0,0,3),(1, 2, 0)\}$
@@ -29,10 +49,12 @@ $\Pi = (3,3,W,B)$ with :
 \end{itemize}
 (we did here the following "mapping" : $M\rightarrow 0, O\rightarrow 1, P\rightarrow 2$)
 \end{exmp}
-\subsection{Nodes-as-edges form}
-When $\bdd = 2$, One could see the problem as following :
-The black nodes are considered as edges. This lead the tree to be only composed of white nodes where only the one with a degree $\wdd$ are considered.\\
-Each of theses nodes must labels their ports according to $W$ and for every two such nodes $u$ and $v$, if there is an edge between them, the 2 labels of the corresponding ports must be in $B$\\
+\subsection{The nodes-as-edges notation}
+When $\bdd = 2$, One could, find an equivalent problem $\Pi'$ to $\Pi = (\wdd,2,W,B)$ on a bipartite graph $G$ using the following idea \cite{1}:
+
+The graph $G'$ is G where all black nodes are edges This lead $G'$ to be only composed of white nodes where only the ones with a degree $\wdd$ are considered by $\Pi'$.
+$\Pi'$ act as the following on the graph $G'$ instead of $G$:\\
+Each of theses nodes must labels their ports according to $W$ and, for every two such nodes $u$ and $v$, if there is an edge between them, the 2 labels of the corresponding ports must be in $B$\\
 
 \subsection{Alphabets}
 The alphabet of the white constraint of a given problem $\Pi$ is the subset of the labels used in all the white configurations, we denote it $A_{\Pi,w}$. Similarly, the alphabet of the black constraint is denoted $A_{\Pi,b}$\\\\

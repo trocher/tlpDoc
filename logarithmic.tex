@@ -61,12 +61,40 @@ We can see that any oriented edge $(u,v)$ start from a port of $u$ labelled with
 The white constraint is respected since there are no other configuration used for any node with a degree 3.
 We can see that any oriented edge $(u,v)$ start from a port of $u$ labelled with $C$ and end on a port of $v$ labelled with either $A$ or $B$, since the black constraint contains both $CA$ and $CB$ in both of theses cases the configuration is valid.
 
+
+\section{Logarithmic upper bound using even orientation and a 3-edge coloring}
+Again, from \cite{1} we know that creating an even orientation (EO) in a 3 regular has a $\Theta(log(n))$ complexity \cite{1}, the sames apply to creating a 3-edge coloring. Let use theses result to show that some 3 labelling problems have a $\mathcal{O}(log(n))$ complexity. To do that, for each problem, we will show that given any graph with a EO, there exist a constant algorithm that solve it.\\
+The EO and the 3-edge coloring $(R,G,B)$ ensure that, on any 3 regular graph, a given node $u$ with a degree 3 has either:
+\begin{itemize}
+    \item 2 outgoing edges and 1 incoming edge.
+    The coloring of the edges of the node can lead to 3 possibilities:
+    \begin{itemize}
+        \item $X_1$ : The incoming edge has color R and the 2 outgoing edges has color G and B
+        \item $X_2$ : The incoming edge has color G and the 2 outgoing edges has color R and B
+        \item $X_3$ : The incoming edge has color B and the 2 outgoing edges has color R and G
+    \end{itemize}
+    \item 0 outgoing edge and 3 incoming edges, one for each color. We denote theses node $Y$
+\end{itemize}
+\subsection[(W = (ABC), B = (AA,BC)]{$W = \{ABC\}$, $B = \{AA, BC\}$}
+\begin{itemize}
+    \item We label the ports of the nodes of type $X_1$ depending on the color of the corresponding edge in the following way : $R \rightarrow C$, $B \rightarrow A$, $G \rightarrow B$, this respect the white constraint since $ABC\in W$
+    \item We label the ports of the nodes of type $X_2$ depending on the color of the corresponding edge in the following way : $R \rightarrow C$, $B \rightarrow A$, $G \rightarrow B$, this respect the white constraint since $ABC\in W$
+    \item We label the ports of the nodes of type $X_3$ depending on the color of the corresponding edge in the following way : $R \rightarrow C$, $B \rightarrow A$, $G \rightarrow B$, this respect the white constraint since $ABC\in W$
+    \item We label the nodes of type $Y$ with $CCC$
+\end{itemize}
+The white constraint is respected since there are no other configuration used for any node with a degree 3.
+We can see that any oriented edge $(u,v)$ start from a port of $u$ labelled with either $A$ or $B$ and end on a port of $v$ labelled with $C$, since the black constraint contains both $AC$ and $BC$ in both of theses cases the configuration is valid.
+
+
 \section{Logarithmic upper bound using 3-vertex coloring and 3-edge coloring}
 Since both 3-vertex coloring an 3-edge coloring have a complexity $\Theta(log_n)$ on 3-regular trees, it would be enough to have an algorithm that run in constant time in 3-regular given a 3-vertex coloring $(X,Y,Z)$ and a 3-edge coloring to prove that a given problem have a $\mathcal{O}(log(n))$ complexity.
 
 We make the coloring greedy in the way that a node is labelled with Y if it has a neighbor X and a node is labelled with Z if it has both a neighbor X and a neighbor Y
 
 
+\section{Logarithmic upper Bound using RCP(x)}
+In the following we are going to show algorithms of complexity $\mathcal{O}(\log{}n)$ for specifics problems.\\
+\subsection{$W = \{AB,CC\}$, $B = \{ABC\}$}
 
 \section{Logarithmic upper Bound using RCP(x)}
 In the following we are going to show algorithms of complexity $\mathcal{O}(\log{}n)$ for specifics problems.\\
