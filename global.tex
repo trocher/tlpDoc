@@ -1,2 +1,7 @@
 %!TEX root = main.tex
-Now that all unsolvable problems has been classified, we know that every problems left must have a $\mathcal{O}(n)$ complexity.
+Now that all unsolvable problems has been classified, we know that every problems left must have a $\mathcal{O}(n)$ complexity. In this section, we are going, for each problem, to find if its complexity is either $\Omega(n)$ (which would lead the problem to be $\Theta(n)$) either $o(n)$, in other word, $O(log(n))$.
+\section[Proving Omega(n)]{Proving $\Omega(n)$}
+The \hyperref[sec:BLP]{\textbf{binary labelling problem}} implemented lead to show that $\Omega(n)$ hold for a lot of problems. Indeed, while some problems $\Pi$ having a global complexity are classified since $|A_\Pi|<3$, some other with $|A_\Pi| = 3$ are classified using the redundancy of their labels. In the case of $\wdd = 3, \bdd = 2$, this lead to the classification of 153 problems having a global complexity, as we will see later, there are the only ones.
+\section[Proving o(n)]{Proving $o(n)$}
+\subsection[For degree tupple (3,2)]{$\wdd = 3, \bdd = 2$}
+In the following, we are going to take the set $P$ of all problems that does not have any restrictions unclassified (the border problems between the unclassified problems and the $\Theta(n)$ problems) and show that each problem in $P$ have a complexity $O(log(n))$. By definition of $P$, showing that they have a $log(n)$ upper bound will also show that every problems that have not been yet classified also are $O(log(n))$ since they must be a restriction of a problem in $P$ white and black degree.

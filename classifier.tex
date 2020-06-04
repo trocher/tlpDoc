@@ -89,6 +89,8 @@ Using the algorithm reduce the number of problems to classify since a lot of the
 \hline
 \end{tabular}
 \end{center}
+
+
 \section{Classification of a problem}
 We are going to classify the problems into the 5 following categories : \textit{constant, iterated-logarithmic, logarithmic, global, unsolvable}. To classify a problem $\Pi$ in a category $c$, one should show that $\Pi$  have $c$ as lower bound on its complexity (in other world, it is not possible to solve $\Pi$ in $o(c)$ and that $\Pi$ has $c$ as upper bound on its complexity ($\Pi$ is solvable in $O(c)$). Since a lot of problems are relaxations or restriction of other problems, we are going to use this fact to "propagate" lower and upper bound in the following way.
 \subsection{Giving a lower bound to a problem}
@@ -104,3 +106,49 @@ Suppose we have some upper-bound of the complexity $u$ of a problem $\Pi$. We sh
     \item For all the problems that are a relaxation of any problems of the set of equivalent problems of $\pi$, set its upper-bound to $u$
 \end{itemize}
 Setting a complexity $c$ to a problem is then similar to applying both of theses process to the problem.
+
+
+\section{The classification of binary labelling problems}\label{sec:BLP}
+A complete complexity classification of the problems using 1 or 2 labels already exists \cite{1}. In the case of the problems that are using 3 labels theses result will be useful in two ways :
+\begin{itemize}
+    \item Since ternary labelling problems are always relaxation of some binary labelling problems, it provide some useful upper bounds for problems with 3 labels.
+    \item As we will see, some 3-labelling problems can be reduced to 2-labelling problems since some of their labels are in fact redundant.
+\end{itemize}
+\subsection{Implementation of the binary labelling problems}
+The entire results of the binary labelling problems has been implemented in the classifier, despite providing nice upper bounds for ternary labelling problems, it is also possible to query the complexity of a binary labelling problem with white and black degrees unbounded.
+\subsubsection{Redundant labels}
+The idea here is that in some problems with $|A_{\Pi}|=3$, we could create a new problem with the same complexity by removing every configuration that use a label $l_i$.\\
+In order to do that, there must be a label $l_j\neq l_i$ such that for every configuration $c=(x_{l_1},x_{l_2},x_{l_3})$ using $l_i$, there must exists another configuration $c'=(x_{l_1'},x_{l_2'},x_{l_3'})$ such that : 
+\begin{itemize}
+    \item $l_i'=0$
+    \item $l_j'= l_j+l_i$
+    \item $l_k' = l_k$ where $ k = \Sigma \setminus \{l_i,l_j\}$ 
+\end{itemize}
+In other word, each time a node is using a configuration using $l_i$ it could safely switch to a similar configuration using $l_j$ instead of $l_i$. Hence it appear that if we remove all the configurations using $l_i$ the new binary labelling problem obtained will have the same complexity since $l_i$ was redundant.
+The constructed problem cannot be easier than the original one since it is a restriction of it.
+\begin{exmp}
+Let $\Pi$ be the following problem with $\wdd = 3$ and $\bdd = 2$ :
+\begin{itemize}
+    \item $W = ABB, BBC, BCC, CCC, AAA, BBB, ACC, ABC$
+    \item $B = AC, AB$
+\end{itemize}
+Can be described as :
+Let's show that C is redundant in this problem and can be replaced by B:\\\\
+In the black constraint, $AC$ is the only configuration using $C$, we can use $AB$ instead (the $C$ is replaced by $B$\\
+In the white constraint :
+\begin{itemize}
+    \item $BB\textbf{C} \rightarrow BB\textbf{B}$
+    \item $B\textbf{CC} \rightarrow B\textbf{BB}$
+    \item $\textbf{CCC} \rightarrow \textbf{BBB}$
+    \item $A\textbf{CC} \rightarrow A\textbf{BB}$
+    \item $AB\textbf{C} \rightarrow AB\textbf{B}$
+\end{itemize}
+We can see that each new configuration obtained by replacing $C$ by $B$ is indeed in the black constraint.\\
+We can now construct a binary labelling problem $\Pi'$ equivalent to $\Pi$ :\\
+$\Pi'=(3,\bdd,W',B')$ with :
+\begin{itemize}
+    \item $W' = ABB, AAA, BBB$
+    \item $B' = AB$
+\end{itemize}
+W' and B' being W and B minus all the configurations using $C$
+\end{exmp}
