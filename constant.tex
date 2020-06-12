@@ -1,14 +1,20 @@
 %!TEX root = main.tex
-By using round-elimination \cite{round-eliminator}, we are able to get constants upper bounds on a lot of problems. The round-eliminator can prove that a given problem must have a constant complexity, however, a problem for which the round-eliminator does not find a constant upper bound can also be constant.\\\\
-In the case $\wdd = 3$, $\bdd = 2$, and using the command:
-\begin{lstlisting}
-server autoub -f problem --iter 9 --labels 3
-\end{lstlisting}
-We obtains the followings results on the problem dataset :
+\section{The round eliminator}
+Before going any further, we will reduce the database set by removing from it a lot of constant problems.
+By using round-elimination \cite{round-eliminator}, we are able to get constant upper bounds on a lot of problems. The round-eliminator can prove that a given problem must have a constant complexity, however, a problem for which the round-eliminator does not find a constant upper bound can also be constant.
+
+Since the time and resources needed by the round eliminator are increasing with the \textit{iterations} and \textit{labels} parameters, we run the round eliminator on the set of unclassified problem by iteration while increasing the parameters each time.
+
+\section{Results}
+With $\wdd = 3$, $\bdd = 2$, and by using the auto upper bound functionality of the tool, we manage to classify 6470 constant problem with the following distribution 
 \begin{itemize}
     \item 0 rounds : 5414 problems
     \item 1 rounds : 761 problems
-    \item 2 rounds : 89 problems
-    \item 3 rounds : 65 problems
-    \item 4 rounds : 9 problems
+    \item 2 rounds : 65 problems
+    \item 3 rounds : 138 problems
+    \item 4 rounds : 16 problems
+    \item 5 rounds : 38 problems
+    \item 6 rounds : 15 problems
+    \item 7 rounds : 15 problems
+    \item 8 rounds : 8 problems
 \end{itemize}

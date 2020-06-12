@@ -1,5 +1,5 @@
 %!TEX root = main.tex
-\subsection{General Form}
+\section{General Form}
 The alphabet of a \textit{ternary labelling problem} is $\Sigma = \{0,1,2\}$\\\\
 A \textit{ternary labelling problem} is a tuple $\Pi = (\wdd,\bdd,W,B)$ where :
 \begin{itemize}
@@ -16,8 +16,8 @@ The problem is solved correctly if :
     \item For each white, resp. black, node, the tuple $(x_1,x_2, x_3)$, with $x_i$ the number of incident edges labelled with the label $i$, is a configuration contained in W, resp. B
 \end{itemize}
 
-\subsection{Alpha Form}
-The general form presented above has been chosen for its with the classifier, however, We can describe a problem $\Pi$ in a more readable form using regular expressions \cite{1,LB_MM} to represent the sets of configurations (constraints).
+\section{Alpha Form}
+The general form presented above has been chosen as the internal form of a problem in the classifier, however, we can describe a problem $\Pi$ in a more readable form using regular expressions \cite{1,LB_MM} to represent the sets of configurations (constraints).
 \begin{itemize}
     \item $\wdd\in\{2,3,...\}$ is the \textit{white degree}
     \item $\bdd\in\{2,3,...\}$ is the \textit{black degree}
@@ -47,18 +47,18 @@ $\Pi = (3,3,W,B)$ with :
     \item $W = \{(0,0,3),(1, 2, 0)\}$
     \item $B = \{(0,3,0),(1,2,0),(1,1,1),(1,0,2)\}$
 \end{itemize}
-(we did here the following "mapping" : $M\rightarrow 0, O\rightarrow 1, P\rightarrow 2$)
+(we did here the following mapping : $M\rightarrow 0, O\rightarrow 1, P\rightarrow 2$)
 \end{exmp}
-\subsection{The nodes-as-edges notation}
-When $\bdd = 2$, One could, find an equivalent problem $\Pi'$ to $\Pi = (\wdd,2,W,B)$ on a bipartite graph $G$ using the following idea \cite{1}:
+\section{The nodes-as-edges notation}
+When $\bdd = 2$, one could find an equivalent problem $\Pi'$ to $\Pi = (\wdd,2,W,B)$ on a bipartite graph $G$ using the following idea \cite{1}:
 
-The graph $G'$ is G where all black nodes are edges This lead $G'$ to be only composed of white nodes where only the ones with a degree $\wdd$ are considered by $\Pi'$.
-$\Pi'$ act as the following on the graph $G'$ instead of $G$:\\
-Each of theses nodes must labels their ports according to $W$ and, for every two such nodes $u$ and $v$, if there is an edge between them, the 2 labels of the corresponding ports must be in $B$\\
+The graph $G'$ is G where all black nodes are edges. This lead $G'$ to be exclusively composed of white nodes where only the ones with a degree $\wdd$ are considered by $\Pi'$.
+$\Pi'$ acts as the following on the graph $G'$ instead of $G$:\\
+Each of its must labels their ports according to $W$ and, for every two such nodes $u$ and $v$, if there is an edge between them, the 2 labels of the corresponding ports must be in $B$\\
 
-\subsection{Alphabets}
-The alphabet of the white constraint of a given problem $\Pi$ is the subset of the labels used in all the white configurations, we denote it $A_{\Pi,w}$. Similarly, the alphabet of the black constraint is denoted $A_{\Pi,b}$\\\\
-The effective alphabet of the problem is the union between the alphabet of the white constraint and the black constraint $A_{\Pi} = A_{\Pi,w} \cup A_{\Pi,b} \subseteq \Sigma$. It correspond to the labels used by the problem.
+\section{Alphabets}
+The alphabet of the white constraint of a given problem $\Pi$ is the subset of the labels used in all white configurations, we denote it $A_{\Pi,w}$. Similarly, the alphabet of the black constraint is denoted $A_{\Pi,b}$\\\\
+The effective alphabet of a problem is the union between the alphabet of the white constraint and the one of the black constraint $A_{\Pi} = A_{\Pi,w} \cup A_{\Pi,b} \subseteq \Sigma$. It correspond to the labels used by the problem.
 \begin{exmp}
 Let $\Pi = (2,3,W,B)$ with :
 \begin{itemize}
@@ -67,10 +67,11 @@ Let $\Pi = (2,3,W,B)$ with :
 \end{itemize}
 The white alphabet is $\{3\}$, the black alphabet is $\{2,3\}$, the effective alphabet is then $\{2,3\}$
 \end{exmp}
-\subsection{Equivalence}
-As we can see in the example 1.1, the introduced notation can represent a problem, however, it is not the only way to represent it since another "mapping" could have been done leading to another representation of the problem. This subsection does then state the conditions for two representations of the problem to be equivalent.\\\\
-If X is a set of 3-tuple $(x_1,x_2, x_3)$, we denote $X_{a,b,c}$ the set that contains all the 3-tuple $(x_a,x_b, x_c)$ such that $(x_1,x_2, x_3)\in X$  $a,b,c$ being a permutation of $(1,2,3) $\\\\
-The followings problems have the same complexity up to +/- 1 round : 
+\section{Equivalence}
+%TODO CHANGE EXAMPLE NUMBER TO LABELS
+Using the notation introduced in 1.0.1 and 1.0.2, a problem can have multiple representations, depending on the mapping that is done. Thus, this subsection states the conditions for two representations of a problem to be equivalent.\\\\
+If X is a set of 3-tuples $(x_1,x_2, x_3)$, we denote $X_{a,b,c}$ the set that contains all the 3-tuples $(x_a,x_b, x_c)$ such that $(x_1,x_2, x_3)\in X$;  $a,b,c$ being a permutation of $(1,2,3) $.\\\\
+The following problems have the same complexity up to +/- 1 round : 
 \begin{itemize}
     \item $\Pi_0 = (\wdd,\bdd,W,B)$
     \item $\Pi_1 = (\bdd,\wdd,B,W)$
@@ -85,7 +86,7 @@ The following problem with $\wdd = 2$ and $\bdd = 3$ :
     \item $B = B(CC|BA|BC)$
 \end{itemize}
 Can be described as :
-$\Pi = (2,3,W,B)$ with $(W,B)$ or $(B,W)$ being one of the following tuple:\\\\
+$\Pi = (2,3,W,B)$ with $(W,B)$ or $(B,W)$ being one of the following tuples:\\\\
 \begin{array}{cc}
     $( \{(0,1,1),(2, 0, 0)\}$ &  $\{(0,1,2),(1,2,0),(0,2,1)\} )$\\
     $( \{(1,0,1),(0, 2, 0)\}$ &  $\{(2,0,1),(0,1,2),(1,0,2)\} )$\\
@@ -95,10 +96,10 @@ $\Pi = (2,3,W,B)$ with $(W,B)$ or $(B,W)$ being one of the following tuple:\\\\
     $( \{(1,1,0),(0, 0, 2)\}$ &  $\{(2,1,0),(0,2,1),(1,2,0)\} )$
 \end{array}
 \end{exmp}
-\subsection{Representative problem}
-The representative problem $\Pi_c$ of set of equivalents problems will be used to represent them all in order to reduce the database size. It is found by sorting each of the white and black list of configurations of the problems in the equivalent list by alpha-numerical order and then sorting the list of problems to take the first problem in it.
+\section{Representative problem}
+The representative problem $\Pi_c$ of set of equivalent problems will be used to represent them all in order to reduce the database size. The representative problem is found by sorting each of the white and black lists of configurations of the problems in the equivalent list, by alpha-numerical order. Then the whole equivalent list is sorted and the first problem is the representative problem.
 \begin{exmp}
 Considering the previous example,
 \end{exmp}
-\subsection{Restrictions, Relaxations}
+\section{Restrictions, Relaxations}
 A problem $\Pi_1 = (\wdd,\bdd,W_1,B_1)$ is a \textit{restriction} of a problem $\Pi_2 = (\wdd,\bdd,W_2,B_2)$ (and $\Pi_2$ is a relaxation of $\Pi_1$) if and only if $W_1\subseteq W_2$ and $B_1\subseteq B_2$
