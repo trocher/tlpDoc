@@ -154,3 +154,31 @@ $\Pi'=(3,\bdd,W',B')$ with :
 \end{itemize}
 W' and B' being W and B minus all the configurations using $C$
 \end{exmp}
+\section{Using The Classifier}
+The classifier has been implemented in the programming language python, any python script should be run using Python3. We will show below how to work with the classifier
+\subsection{Installing the required packages}
+The following command will install the required packages:
+\begin{lstlisting}
+pip3 install tqdm
+pip3 install bitarray
+\end{lstlisting}
+\subsection{Installing the round eliminator}
+The binary file of the command line version of the round eliminator must be in the root of the classifier, to do so here is a procedure to install it.
+\begin{lstlisting}
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+git clone -b arbitrary2 https://github.com/olidennis/round-eliminator.git
+cd round-eliminator
+RUSTFLAGS="-C target-cpu=native" cargo build --release
+cd ..
+mv round-eliminator/target/release/server 'path-to-tlpClassifier'
+\end{lstlisting}
+\subsection{Generate the data set}
+It is enough the run \textit{generator.py} with the desired black and white degrees as arguments. For example for $\wdd = 3, \bdd =2$ :
+\begin{lstlisting}
+python3 generator.py -w 3 -b 2 
+\end{lstlisting}
+\subsection{Run the classifier}
+In a similar way, we can run the python script \textit{classifier.py} with the desired black and white degrees as arguments. For example for $\wdd = 3, \bdd =2$ :
+\begin{lstlisting}
+python3 classifier.py -w 3 -b 2 
+\end{lstlisting}

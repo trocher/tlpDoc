@@ -140,8 +140,8 @@ In all the cases, all its other neighbors must be in a layer $V_l$ with $l \in \
 
 \subsubsection{The algorithm}
 
-\begin{claim}\label{claim:path} \textit{It is possible to split a path of length at least 10 in at least 2 chunks where each chunk has a size at most $c = \mathcal{O}(1)$ in time $\mathcal{O}(log^*n)$}\\\\
-\textit{Proof.} We know that MIS is possible in time $\mathcal{O}(log^*)$ on paths, we can apply it 
+\begin{claim}\label{claim:path} \textit{It is possible to split a path of length $n\geq 33$ in at least 2 chunks of consecutive nodes where each chunk is a path of minimal length 17 and maximal length 81 nodes in time $\mathcal{O}(log^*n)$}\\\\
+\textit{Proof.} If $n<33$
 
 \end{claim}
 We now present a generic algorithm that, using this decomposition, label all the edges of a graph $G'=(V',E')$ according to the constraints of a problem $\Pi=(3,2,W,B) \in \{\Pi_1,\Pi_2\}\cup S$. Please note that this implies that $B=\{AB,CC\}$.
@@ -204,7 +204,7 @@ Because the chunk's length is at most $c = \mathcal{O}(1)$, we are now going to 
 \end{defi}
 
 \begin{claim}
-\textit{A chunk of length $n$ having as endpoints $X_1X_2\in B$ and $Y_1Y_2\in B$ can be properly labelled in time $\mathcal{O}(1)$ given a path labelling $P(n+1)$ where $(P_0P_1)=X_1X_2$ and $(P_{n-1}P_n)=Y_1Y_2$}\\\\
+\textit{A chunk of length $n$ whose first edge is $X_1X_2\in B$ and its last edge is $Y_1Y_2\in B$ can be properly labelled in time $\mathcal{O}(1)$ given a path labelling $P(n+1)$ where $(P_0P_1)=X_1X_2$ and $(P_{n-1}P_n)=Y_1Y_2$}\\\\
 \textit{Proof.} We start from
 \end{claim}
 
