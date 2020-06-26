@@ -18,7 +18,7 @@ The cartesian product between the set of white constraints and the set of black 
 \end{tabular}
 \end{center}
 \subsection{Representative problem set}
-In order to reduce the data set and avoid to classify problems that are equivalents, for each equivalence set of problems, we can only keep the representative problems in the problem set. This lead to the following number of problems presented in the following table, still depending on $\wdd$ and $\bdd$
+In order to reduce the data set and avoid to classify problems that are equivalent, for each equivalence set of problems, we can only keep the representative problems in the problem set. This lead to the following number of problems presented in the following table, still depending on $\wdd$ and $\bdd$
 \begin{center}
 \begin{tabular}{ | c | c | c | c |}
  \hline
@@ -38,50 +38,51 @@ We can observe a set of problems 6 times smaller when $\wdd \neq \bdd$ (due to r
 \subsection{The constraint reduction algorithm}\label{sec:CR}
 
 \subsubsection{The algorithm}
-We are going to introduce an algorithms that, when applied to each of the problems of the data-set, will reduce its size again considering that a problem with a "useless" configurations has an equivalent complexity of the same problem reduced to only its "useful" configurations.\\
+We are going to introduce an algorithm that, when applied to each of the problems of the data-set, will reduce its size again considering that a problem with some "useless" configurations has an equivalent complexity of the same problem reduced to only its "useful" configurations.\\
 
-The algorithm consist in removing all the white and black configurations of a problem that cannot be used by any node by the problem. It appear that it can be used to show the solvability of a problem as it will be showed later, however it is also useful to have a better understanding of a problem still unclassified.
+The algorithm consists in removing all the white and black configurations of a problem that cannot be used by any node by the problem. It appears that it can be used to show the solvability of a problem as it will be showed later, however it is also useful to have a better understanding of a problem still unclassified.
 \begin{itemize}
-    \item The algorithm take as input a problem $\Pi = (\wdd,\bdd,W,B)$
+    \item The algorithm takes as input a problem $\Pi = (\wdd,\bdd,W,B)$
     \item We start by looking at the set $S$ of labels that are in $A_{\Pi}$ but not in  $A_{\Pi,w} \cap A_{\Pi,b}$.
-    \item For each labels $l$ present in $S$ we know that no node can use a configuration containing $l$ since one of its neighbors would have to have a corresponding configurations also containing $l$ which is impossible by construction of $S$.
-    \item We hence know that all the white or black configurations containing any labels of $S$ will never be used, we can then safely remove them from the white and black constraint sets without modifying the problem.
+    \item For each label $l$ present in $S$ we know that no node can use a configuration containing $l$ since there is either $W$ (resp. $B$) that does not contain a configuration using $l$ or one of its neighbors would have to have a corresponding configuration also containing $l$ which is impossible by construction of $S$.
+    \item We hence know that all the white or black configurations containing any labels of $S$ will never be used, we can then safely remove them from the white and black constraint sets without modifying the problem complexity.
     \item It is now possible to repeat this procedure on the new white and black constraints sets obtained until either one of them is empty or $S$ is empty
+    \item The algorithm returns the produced $W$ and $B$ sets.
 \end{itemize}
 \begin{exmp} Constraint reduction algorithm on $\Pi = (3, 2, \{AAA, ABA\}, \{AA, CB, CC\})$
 
 In the first iteration, we have $S = \{C\}$ since there is no configuration with $C$ in $W$ while there is one in $B$.
-This lead us to remove both $CC$ and $CB$ from $B$ since no white node could properly label if one of its black neighbor would label their common edge with a $C$.
-The new constraints set are :
+This leads us to remove both $CC$ and $CB$ from $B$ since no white node could properly label if one of its black neighbor would label their common edge with a $C$.
+The new constraints sets are :
 $$W' = \{AAA, ABA\}, B' = \{AA\}$$
 By running another iteration of the algorithm we get $S = \{B\}$ since $CB$ has been removed from $B$ in the previous iteration.
-This hence lead to remove $ABA$ from $W$ since this time a black node could not properly label its edge if it is adjacent to a white node that label their common edge with a $B$.
+This hence leads to remove $ABA$ from $W$ since this time a black node could not properly label its edge if it is adjacent to a white node that labels their common edge with a $B$.
 The new constraints set are :
 $$W' = \{AAA\}, B' = \{AA\}$$
-This time, the algorithm return $S = \{\}$, it hence finish and return the following problem $\Pi' = (3, 2, \{AAA\}, \{AA\})$, which is equivalent to $\Pi$.
+This time, the algorithm returns $S = \{\}$, it hence finishes and returns the following problem $\Pi' = (3, 2, \{AAA\}, \{AA\})$, which is equivalent to $\Pi$.
 \end{exmp}
 
 \begin{exmp} Constraint reduction algorithm on $\Pi = (3, 2, \{ABB, ABA, BBB\}, \{AA, CB, CC\})$
 
 In the first iteration, we have $S = \{C\}$ since there is no configuration with $C$ in $W$ while there is one in $B$.
-This lead us to remove both $CC$ and $CB$ from $B$ since no white node could properly label if one of its black neighbor would label their common edge with a $C$.
-The new constraints set are :
+This leads us to remove both $CC$ and $CB$ from $B$ since no white node could properly label if one of its black neighbor would label their common edge with a $C$.
+The new constraints sets are :
 $$W' = \{ABB, ABA, BBB\}, B' = \{AA\}$$
 By running another iteration of the algorithm we get $S = \{B\}$ since $CB$ has been removed from $B$ in the previous iteration.
-This hence lead to remove $ABB$, $ABA$ and $BBB$ from $W$ since this time a black node could not properly label its edge if it is adjacent to a white node that label their common edge with a $B$.
-The new constraints set are :
+This hence leads to remove $ABB$, $ABA$ and $BBB$ from $W$ since this time a black node could not properly label its edge if it is adjacent to a white node that labels their common edge with a $B$.
+The new constraints sets are :
 $$W' = \{\}, B' = \{AA\}$$
-$W'$ is empty, the algorithm hence finish and return the following problem $\Pi' = (3, 2,\{\}, \{AA\})$, equivalent to $\Pi$, this problem is obviously not solvable, the utility of the constraint reduction in proving the solvability of a problem will be showed later when classifying the unsolvable problems.
+$W'$ is empty, the algorithm hence finishes and returns the following problem $\Pi' = (3, 2,\{\}, \{AA\})$, equivalent to $\Pi$, this problem is obviously not solvable, the utility of the constraint reduction in proving the solvability of a problem will be showed later when classifying the unsolvable problems.
 \end{exmp}
 \subsubsection{Improvement on the size of the problem set}
 
-Using the algorithm reduce the number of problems to classify since a lot of them are reduced to some same problems, this lead to the following number of problems presented in the table, again depending on $\wdd$ and $\bdd$:
+Using the algorithm reduces the number of problems to classify since a lot of them are reduced to the same problems, this leads to the following number of problems presented in the table, again depending on $\wdd$ and $\bdd$:
 \begin{center}
 \begin{tabular}{ | c | c | c | c |}
  \hline
  \diagbox{$\wdd$}{$\bdd$} & 2 & 3 & 4 \\ 
  \hline
- 2 & 248 & 7962 & \\
+ 2 & 248 & 7962 & ?\\
  \hline
  3 &  & 81694 & ?\\
  \hline
@@ -92,9 +93,9 @@ Using the algorithm reduce the number of problems to classify since a lot of the
 
 
 \section{Classification of a problem}
-We are going to classify the problems into the 5 following categories : \textit{constant, iterated-logarithmic, logarithmic, global, unsolvable}. To classify a problem $\Pi$ in a category $c$, one should show that $\Pi$  have $c$ as lower bound on its complexity (in other world, it is not possible to solve $\Pi$ in $o(c)$ and that $\Pi$ has $c$ as upper bound on its complexity ($\Pi$ is solvable in $O(c)$). Since a lot of problems are relaxations or restriction of other problems, we are going to use this fact to "propagate" lower and upper bound in the following way.
+We are going to classify the problems into the 5 following categories : \textit{constant, iterated-logarithmic, logarithmic, global, unsolvable}. To classify a problem $\Pi$ in a category $c$, one should show that $\Pi$  has $c$ as lower bound on its complexity (in other world, it is not possible to solve $\Pi$ in $o(c)$ and that $\Pi$ has $c$ as upper bound on its complexity ($\Pi$ is solvable in $O(c)$). Since a lot of problems are relaxations or restrictions of other problems, we are going to use this fact to "propagate" lower and upper bound in the following way.
 \subsection{Giving a lower bound to a problem}
-Suppose we have some lower-bound of the complexity $l$ of a problem $\Pi$. We should follow the following steps:
+Assuming we have some lower-bound of the complexity $l$ of a problem $\Pi$. We should follow the following steps:
 \begin{itemize}
     \item If the problem had a previously attributed lower-bound on the problem that was smaller than the new one, replace it by $l$ if it had a previously attributed upper-bound that is smaller than the new lower-bound, there must be an error.
     \item For all the problems that are a restriction of any problems of the set of equivalent problems of $\pi$, set its lower-bound to $l$
@@ -105,36 +106,35 @@ Suppose we have some upper-bound of the complexity $u$ of a problem $\Pi$. We sh
     \item If the problem had a previously attributed upper-bound on the problem that was bigger than the new one, replace it by $u$
     \item For all the problems that are a relaxation of any problems of the set of equivalent problems of $\pi$, set its upper-bound to $u$
 \end{itemize}
-Setting a complexity $c$ to a problem is then similar to applying both of theses process to the problem.
+Setting a complexity $c$ to a problem is then similar to applying both of these processes to the problem.
 
 
 \section{The classification of binary labelling problems}\label{sec:BLP}
-A complete complexity classification of the problems using 1 or 2 labels already exists \cite{1}. In the case of the problems that are using 3 labels theses result will be useful in two ways :
+As said in the introduction, a complete complexity classification of the problems using 1 or 2 labels already exists \cite{1}. In the case of the problems that are using 3 labels these results will be useful in two ways :
 \begin{itemize}
-    \item Since ternary labelling problems are always relaxation of some binary labelling problems, it provide some useful upper bounds for problems with 3 labels.
+    \item Since ternary labelling problems are always relaxations of some binary labelling problems, it provides some useful upper bounds for problems with 3 labels.
     \item As we will see, some 3 labelling problems can be equivalent to 2-labelling problems since some of their labels are in fact redundant. This would then lead to a tight bound.
 \end{itemize}
 \subsection{Implementation of the binary labelling problems}
-The entire results of the binary labelling problems has been implemented in the classifier, despite providing nice upper bounds for ternary labelling problems, it is also possible to query the complexity of a binary labelling problem with white and black degrees unbounded.
+The entire result of the binary labelling problems has been implemented in the classifier, despite providing nice upper bounds for ternary labelling problems, it is also possible to query the complexity of a binary labelling problem with white and black degrees unbounded.
 \subsection{Redundant labels}
-The idea here is that in some problems with $|A_{\Pi}|=3$, we could create a new problem with the same complexity by removing every configuration that use a label $l_i$.\\
+The idea here is that in some problems with $|A_{\Pi}|=3$, we could create a new problem with the same complexity by removing every configuration that uses a label $l_i$.\\
 In order to do that, there must be a label $l_j\neq l_i$ such that for every configuration $c=(x_{l_1},x_{l_2},x_{l_3})$ using $l_i$ ($x_{l_i}>0$), there must exist another configuration $c'=(x'_{l_1},x'_{l_2},x'_{l_3})$ such that : 
 \begin{itemize}
     \item $x'_{l_i}=0$
     \item $x'_{l_j}= x_{l_j}+x_{l_i}$
     \item $x'_{l_k} = x_{l_k}$ where $ k = \Sigma \setminus \{l_i,l_j\}$ 
 \end{itemize}
-In other word, each time a node is using a configuration using $l_i$ it could safely switch to a similar configuration using $l_j$ instead of $l_i$.
+In other words, each time a node is using a configuration using $l_i$ it could safely switch to a similar configuration using $l_j$ instead of $l_i$.
 We now prove that both the original problem $\Pi$ and the constructed binary labelling problem $\Pi'$ are equivalent.
-Trivially, $\Pi'$ is a reduction of $\Pi$. On the other side, we can show a reduction from $\Pi$ to $\Pi'$ by replacing all labels $l_i$ by $l_j$ in a graph that is a solution of $\Pi$. The two problems must hence have the same complexity.
+Trivially, $\Pi'$ is a reduction of $\Pi$. On the other side, we can show a reduction from $\Pi$ to $\Pi'$ by replacing all labels $l_i$ by $l_j$ in a graph that are a solution of $\Pi$. The two problems must hence have the same complexity.
 
 \begin{exmp}
-Let $\Pi$ be the following problem with $\wdd = 3$ and $\bdd = 2$ :
+Let $\Pi$ be the following problem with $\wdd = 3$ and $\bdd = 2$ that can be described as:
 \begin{itemize}
     \item $W = ABB, BBC, BCC, CCC, AAA, BBB, ACC, ABC$
     \item $B = AC, AB$
 \end{itemize}
-Can be described as :
 Let's show that C is redundant in this problem and can be replaced by B:\\\\
 In the black constraint, $AC$ is the only configuration using $C$, we can use $AB$ instead (the $C$ is replaced by $B$\\
 In the white constraint :
@@ -155,7 +155,7 @@ $\Pi'=(3,\bdd,W',B')$ with :
 W' and B' being W and B minus all the configurations using $C$
 \end{exmp}
 \section{Using The Classifier}
-The classifier has been implemented in the programming language python, any python script should be run using Python3. We will show below how to work with the classifier
+The classifier has been implemented in the programming language python, any python script should be run using Python3. We will show below how to work with the classifier.
 \subsection{Installing the required packages}
 The following command will install the required packages:
 \begin{lstlisting}
@@ -182,3 +182,11 @@ In a similar way, we can run the python script \textit{classifier.py} with the d
 \begin{lstlisting}
 python3 classifier.py -w 3 -b 2 
 \end{lstlisting}
+Adding the "-s" with produce .txt files for each complexity containing all the problems that have been classified in it as well as a "unclassified" file containing both the lower bound and upper bound founds.
+\begin{lstlisting}
+python3 classifier.py -w 3 -b 2 -s
+\end{lstlisting}
+\subsection{Looking for problems}
+The file api.py provide a way to search for the complexity of a given problem and other useful methods that can be used to browse the problem set.
+\section{The classification}
+In the next sections, we will try to explain what is done by the classifier and show why it is correct. We will focus on the problems that have a white degree $\wdd = 3$ and a black degree $\bdd = 2$

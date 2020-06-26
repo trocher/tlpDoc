@@ -5,13 +5,13 @@ Let's take a problem $\Pi = (\wdd,\bdd,W,B)$. After running the constraint reduc
 \begin{itemize}
     \item $|W'| = 0$ or $|B'| = 0$ :
     
-    In this case, it seems pretty obvious that $\Pi' = (\wdd,\bdd,W',B')$ cannot be solved since for either the white nodes, either the black nodes, we cannot assign any configuration, since $\Pi'$ is equivalent to $\Pi$, it appears that $\Pi$ is unsolvable as well.
+    In this case, it seems pretty obvious that $\Pi' = (\wdd,\bdd,W',B')$ cannot be solved since that we cannot assign any configuration to either the white nodes or the black nodes, because $\Pi'$ is equivalent to $\Pi$. It appears that $\Pi$ is unsolvable as well.
     \item  $|W'| > 0$ and $|B'| > 0$:
     
     In this case, we are going to prove that $\Pi$ must be solvable by showing an algorithm that solve it:
     \begin{itemize}
         \item We elect a white leader in the graph using $GATHER$
-        \item The leader chooses any configuration in $W'$ (this is possible since $|W'|>0$
+        \item The leader chooses any configuration in $W'$ (this is possible since $|W'|>0)$
         \item Each time a white (resp. black) node $u$ in the graph has a complete labelling of its adjacent edges, it sends, to each of its neighbors $v_i$, $i\in\wdd$ (resp. $i\in\bdd$) the label $l$ of their common edge $(u,v_i)$. $u$ does not do anything else afterwards.
         \item Each time a white (resp. black) node $v$ receives such a label $l$, it finds a configuration $c$ in $W$ (resp. $B$) that contains $l$ and labels all its other incident edges with the other labels of $c$. Note that finding such a configuration is possible since by construction, if $W'$(resp. $B'$) contains a configuration with $l$, $B'$ (resp. $W'$) must contain a configuration with $l$
     \end{itemize}
@@ -20,4 +20,5 @@ Let's take a problem $\Pi = (\wdd,\bdd,W,B)$. After running the constraint reduc
 At some point, the graph should be fully labelled even if it took $\mathcal{O}(n)$ time to do it. Remember that since the graph is a tree, a given un-visited node can only have 1 neighbor that has labelled their common edge at some point of time, there is hence no conflict in the labelling.
 
 \section{Results}
-Using the constraint reduction algorithm hence leads to a fully classification of the unsolvable problems, the other problems must have a complexity  $\mathcal{O}(n)$. In the case $\wdd = 3, \bdd = 2$, we found that 227 out of 7962 problems are unsolvable.
+The constraint reduction algorithm can be used with any white and black degree, however we are here focusing on $\wdd = 3, \bdd = 2$.
+As explain above, the algorithm leads to a fully classification of the unsolvable problems, the other problems must have a complexity  $\mathcal{O}(n)$. In the case $\wdd = 3, \bdd = 2$, we found that 227 out of 7962 problems are unsolvable.
