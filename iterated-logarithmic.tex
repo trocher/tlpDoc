@@ -23,11 +23,57 @@ We will now present here an algorithm $A$ that solves $\Pi\in I$ in time $log^*n
 \end{itemize}
 \end{proof}
 \end{claim}
+\section{Iterated-logarithmic upper bound using a maximal matching}
+We are going to show that there exists a $log^*n$ upper bound on the following problem:
+$\Pi = (3,2,W,B)$
+with
+\begin{itemize}
+    \item $W = AAC, BBB, ABB$
+    \item $B = CC, BC, AA$
+\end{itemize}
+To do so, lets show a $log^*n$ algorithm that solve it on a graph $G=(V,E)$.
+We fist start by getting a subset $E_M\subseteq E$ of the edges of the graph that is a maximal matching in time $\mathcal{O}(log^*n)$.\\
+From here, a node $v$ can either not be matched and have no incident edge from $E_M$, or have be matched and have exactly one incident edge in $E_M$.\\
+In the former case, the node choose one of its edge and label it with P, we call this set of edge $E_P\subseteq E$.\\\\
+We now have a structure in which we have "M" edges, some of which are surrounded by some "P" edges and these edges together cover all nodes. So we have a spanning forest that consists of trees with one "M" and 0 to 4 "P" edges.\\\\
+We now un-label edges labelled with $M$ from which both endpoints are covered by $P$ edges.\\\\
+So now we have a spanning forest in which trees are of one of the following types:
+\begin{itemize}
+    \item Only one "M" edge or only one "P" edge : Label it with $CC$
+    \item One "M" edge adjacent to one or two "P" edges, or two "P" edges: Label all edges with $CB$ so that the center gets Bs and the leaf nodes get Cs.
+\end{itemize}
+All other edges get AA labels.\\\\
+We will now show that the previous algorithm result in a correct labelling according to $\Pi$.
+First, we can see that the pairs of labels that the algorithm uses to labels the edges are always in $B$ ($CC,AA$ and $CB$), this lead the black constraint to be respected.\\\\
+Let's now take a look at the white constraint and show that any node $u$ must have a proper labelling according to $W$.\\
+In the following, we define $u_X$ the number of incident edges to $u$ labelled with $X\in\{P,M\}$
+\begin{itemize}
+    \item $u$ was matched (let $v$ be its matched neighbor):
+    \begin{itemize}
+        \item $u$ was not covered by edges labelled with P
+        \begin{itemize}
+            \item $u_P=0,u_M=1$ : The $M$ edge is labelled with $CC$, the other edges are labelled with $AA$, this lead the labels of the ports of $u$ to be $AAC\in W$
+        \end{itemize}
+        \item $v$ was not covered by edges labelled with P
+        \begin{itemize}
+            \item $u_P=1,u_M=1$ : All incident edges of $u$ labelled with P or M get labelled with $CB$ where the $B$ is on $u$'s side, the left edge is labelled with $AA$. The labels of the ports of $u$ are then $BBA$ 
+            \item $u_P=2,u_M=1$ : All incident edges of $u$ get labelled with $CB$ where the $B$ is on $u$'s sideThe labels of the ports of $u$ are then $BBB\in W$
+        \end{itemize}
+        \item $u$ and $v$ were covered by edges labelled with P
+        \begin{itemize}
+            \item $u_P=1,u_M=0$ : The $P$ edge is labelled with $CC$, the other edges are labelled with $AA$, this lead the labels of the ports of $u$ to be $AAC\in W$
+            \item $u_P=2,u_M=0$ : $u$'s incident edges of labelled with P get labelled with $CB$ where the $B$ is on $u$'s side, the left edge is labelled with $AA$. The labels of the ports of $u$ are then $BBA\in W$ 
+        \end{itemize}
+    \end{itemize}
+    \item $u$ was not matched : $u_P=1,u_M=0$ : The $P$ edge is labelled with $CC$, the other edges are labelled with $AA$, this lead the labels of the ports of $u$ to be $AAC\in W$
+\end{itemize}
+    
+We can see that for every node $u$, the labelling of its port is in $W$, this lead the algorithm to produce a correct labelling.
 
-\section{Iterated-logarithmic lower bound using a cover map}
+\section{Iterated-logarithmic lower bound using a covering map}
 \subsection{Simulation from the LOCAL model to the PN and orientation model}
 \textbf{TODO Prove that an algorithm cannot do more in a tree in the LOCAL model than in the Port number \& orientation model}\\
-\subsection{The cover map}
+\subsection{The covering map}
 In this section we are going to show that an algorithm must fulfill certain conditions in order to run in constant time.
 Let's take an algorithm $A$ that solves $\Pi = (3,2,W,B)$ in the LOCAL model. According to \textbf{TODO}, there must be a similar algorithm $A'$ that solves as well $\Pi$ in the Port numbering model given an orientation. By contraposition, showing that such an algorithm $A'$ does not exist would then imply that $A$ would also not exist leading $\Pi$ to have a complexity strictly higher than constant.
 In the following section, we are precisely going to show this for some algorithms\\\\
@@ -54,8 +100,8 @@ According to Jukka Suomela's textbook \cite{textbook}, we redefine here his defi
 \end{itemize}
 \end{defi}
 Theorem 8.1 of the textbook \cite[p.127]{textbook} also state that, if there exists a covering map $\Phi$ between two networks $N = (V,P,p, \preceq)$ and $N' = (V',P',p',\preceq')$, a deterministic algorithm that produce an output on $v \in V$ in $t=\mathcal{O}(1)$ must produce the same output for $v'\in V'$ after $t$ rounds if $v' = \Phi(v)$.\\\\
-We now introduce $U_G = (V_U, E_U,\preceq_U)$ a tree that is the unfolded tree-like version of $F_G$ \cite[p. 7]{linear_in_delta} as in the figure \ref{fig:cv1}. We can see that a cover map between $F_G$ and $U_G$ exists.\\\\
- From this cover map, we know that :
+We now introduce $U_G = (V_U, E_U,\preceq_U)$ a tree that is the unfolded tree-like version of $F_G$ \cite[p. 7]{linear_in_delta} as in the figure \ref{fig:cv1}. We can see that a covering map between $F_G$ and $U_G$ exists.\\\\
+ From this covering map, we know that :
  \begin{itemize}
      \item $A'$ must produce the same output for every node $u_i$ of $U_G$ that satisfy $u_i = \Phi(u)$
      \item $A'$ must produce the same output for every node $v_i$ of $U_G$ that satisfy $v_i = \Phi(v)$
