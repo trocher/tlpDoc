@@ -1,11 +1,11 @@
 %!TEX root = main.tex
 \section{The round eliminator}
+\subsection{Constant upper bound}
 Before going any further, we will reduce the database set by removing from it a lot of constant problems.
 By using round-elimination \cite{round-eliminator}, we are able to get constant upper bounds on a lot of problems. The round-eliminator can prove that a given problem must have a constant complexity, however, a problem for which the round-eliminator does not find a constant upper bound can also be constant.
 
 Since the time and resources needed by the round eliminator are increasing with the \textit{iterations} and \textit{labels} parameters, we run the round eliminator on the set of unclassified problem by iteration while increasing the parameters each time.
 
-\section{Results}
 With $\wdd = 3$, $\bdd = 2$, and by using the auto upper bound functionality of the tool, we manage to classify 6472 constant problems with the following distribution on their upper bound.
 \begin{itemize}
     \item 0 rounds : 5414 problems
@@ -19,3 +19,17 @@ With $\wdd = 3$, $\bdd = 2$, and by using the auto upper bound functionality of 
     \item 8 rounds : 8 problems
     \item 9 rounds : 3 problems
 \end{itemize}
+
+\subsection{Constant lower bound}
+The round eliminator \cite{round-eliminator} also provides an automatic lower bound feature, we used it on the constant problems that are not 0 rounds solvable according to the upper bounds found earlier to get nice constant lower bounds and get the following distribution with the parameters $\wdd = 3$, $\bdd = 2$ :
+\begin{itemize}
+    \item 6 rounds : 2 problems
+    \item 5 rounds : 17 problems
+    \item 4 rounds : 57 problems
+    \item 3 rounds : 156 problems
+    \item 2 rounds : 65 problems
+    \item 1 rounds : 761 problems
+    \item 0 rounds : 5414 problems
+\end{itemize}
+
+Please note that since we ran the automatic upper and lower bound features with both the black and white node as active nodes, for each problem, we kept the smallest upper bound found. As for the lower bound, we kept the biggest one found such that it is smaller or equal than the upper bound of the problem.

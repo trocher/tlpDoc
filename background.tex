@@ -1,0 +1,9 @@
+%!TEX root = main.tex
+\section{The model of computing}
+In this work, we will be using the deterministic LOCAL model \cite{locality,locality2} of computing. For a graph $G=(V,E)$, each node can be described as a computer having an unique identifier as input and each edge as a communication link.
+
+Each round, every node can send a message to each of its neighbors. A algorithm runs in time $T$ if it takes $T$ rounds for all the nodes to compute their output and stop.
+
+When a problem runs in time $T$, we can equivalently say that it has a locality $T$ since it is enough for every nodes to know its radius-$T$ neighbors to compute its output since it cannot see more of the graph in time $T$
+\section{The problem setting}
+Like in a previous work on binary labelling problems \cite{1}, We will focus in this work on graphs that are trees (a simple, connected, acyclic graph) and hence assume that the inputs of the problems are always trees.

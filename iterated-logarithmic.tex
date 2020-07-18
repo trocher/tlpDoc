@@ -9,12 +9,12 @@ Again, please note that this section apply to the white and black degrees $\wdd 
     \item $W$ contains : $AAA,BBB,CCC$ and $|W| > 3$
     \item $B$ contains : $AB,AC,BC$
 \end{itemize}
-A problem $\Pi_1\in I$ has a complexity $\mathcal{O}(log^*(n))$}\\\\
+A problem $\Pi_1\in I$ has a complexity $\mathcal{O}(\log^*(n))$}\\\\
 \begin{proof}
 Since $\bdd = 2$ we will use the node-as-edge form.
-We will now present here an algorithm $A$ that solves $\Pi\in I$ in time $log^*n$.
+We will now present here an algorithm $A$ that solves $\Pi\in I$ in time $\log^*n$.
 \begin{itemize}
-    \item We first produce a 4 coloring $A,B,C,D$ in time $log^*n$ 
+    \item We first produce a 4 coloring $A,B,C,D$ in time $\log^*n$ 
     \item Then we make it greedy in the way that nodes labelled $D$ are used only when their 3 neighbors are labelled with $A,B$ and $C$
     \item White nodes colored with A label their incident edges with AAA
     \item White nodes colored with B label their incident edges with BBB
@@ -24,15 +24,15 @@ We will now present here an algorithm $A$ that solves $\Pi\in I$ in time $log^*n
 \end{proof}
 \end{claim}
 \section{Iterated-logarithmic upper bound using a maximal matching}
-We are going to show that there exists a $log^*n$ upper bound on the following problem:
+We are going to show that there exists a $\log^*n$ upper bound on the following problem:
 $\Pi = (3,2,W,B)$
 with
 \begin{itemize}
     \item $W = AAC, BBB, ABB$
     \item $B = CC, BC, AA$
 \end{itemize}
-To do so, lets show a $log^*n$ algorithm that solve it on a graph $G=(V,E)$.
-We fist start by getting a subset $E_M\subseteq E$ of the edges of the graph that is a maximal matching in time $\mathcal{O}(log^*n)$.\\
+To do so, lets show a $\log^*n$ algorithm that solve it on a graph $G=(V,E)$.
+We fist start by getting a subset $E_M\subseteq E$ of the edges of the graph that is a maximal matching in time $\mathcal{O}(\log^*n)$.\\
 From here, a node $v$ can either not be matched and have no incident edge from $E_M$, or have be matched and have exactly one incident edge in $E_M$.\\
 In the former case, the node choose one of its edge and label it with P, we call this set of edge $E_P\subseteq E$.\\\\
 We now have a structure in which we have "M" edges, some of which are surrounded by some "P" edges and these edges together cover all nodes. So we have a spanning forest that consists of trees with one "M" and 0 to 4 "P" edges.\\\\
@@ -54,12 +54,12 @@ In the following, we define $u_X$ the number of incident edges to $u$ labelled w
         \begin{itemize}
             \item $u_P=0,u_M=1$ : The $M$ edge is labelled with $CC$, the other edges are labelled with $AA$, this lead the labels of the ports of $u$ to be $AAC\in W$
         \end{itemize}
-        \item $v$ was not covered by edges labelled with P
+        \item $i$ was covered by edges in $E_p$ but not $v$
         \begin{itemize}
-            \item $u_P=1,u_M=1$ : All incident edges of $u$ labelled with P or M get labelled with $CB$ where the $B$ is on $u$'s side, the left edge is labelled with $AA$. The labels of the ports of $u$ are then $BBA$ 
-            \item $u_P=2,u_M=1$ : All incident edges of $u$ get labelled with $CB$ where the $B$ is on $u$'s sideThe labels of the ports of $u$ are then $BBB\in W$
+            \item $u_P=1,u_M=1$ : All incident edges of $u$ labelled with P or M get labelled with $CB$ where the $B$ is on $u$'s side, the left edge is labelled with $AA$. The labels of the ports of $u$ are then $BBA\in W$ 
+            \item $u_P=2,u_M=1$ : All incident edges of $u$ get labelled with $CB$ where the $B$ is on $u$'s side. The labels of the ports of $u$ are then $BBB\in W$
         \end{itemize}
-        \item $u$ and $v$ were covered by edges labelled with P
+        \item $u$ and $v$ were covered by edges in $E_p$
         \begin{itemize}
             \item $u_P=1,u_M=0$ : The $P$ edge is labelled with $CC$, the other edges are labelled with $AA$, this lead the labels of the ports of $u$ to be $AAC\in W$
             \item $u_P=2,u_M=0$ : $u$'s incident edges of labelled with P get labelled with $CB$ where the $B$ is on $u$'s side, the left edge is labelled with $AA$. The labels of the ports of $u$ are then $BBA\in W$ 
@@ -71,11 +71,11 @@ In the following, we define $u_X$ the number of incident edges to $u$ labelled w
 We can see that for every node $u$, the labelling of its port is in $W$, this lead the algorithm to produce a correct labelling.
 
 \section{Iterated-logarithmic lower bound using a covering map}
-\subsection{Simulation from the LOCAL model to the PN and orientation model}
+\subsection{Simulation from the LOCAL model to the PN and orientation model}\label{sec:simulation}
 \textbf{TODO Prove that an algorithm cannot do more in a tree in the LOCAL model than in the Port number \& orientation model}\\
 \subsection{The covering map}
 In this section we are going to show that an algorithm must fulfill certain conditions in order to run in constant time.
-Let's take an algorithm $A$ that solves $\Pi = (3,2,W,B)$ in the LOCAL model. According to \textbf{TODO}, there must be a similar algorithm $A'$ that solves as well $\Pi$ in the Port numbering model given an orientation. By contraposition, showing that such an algorithm $A'$ does not exist would then imply that $A$ would also not exist leading $\Pi$ to have a complexity strictly higher than constant.
+Let's take an algorithm $A$ that solves $\Pi = (3,2,W,B)$ in the LOCAL model. According to the section \ref{sec:simulation}, there must be a similar algorithm $A'$ that solves as well $\Pi$ in the Port numbering model given an orientation. By contraposition, showing that such an algorithm $A'$ does not exist would then imply that $A$ would also not exist leading $\Pi$ to have a complexity strictly higher than constant.
 In the following section, we are precisely going to show this for some algorithms\\\\
 
 Since the black nodes have a degree $\bdd = 3$ we can simply consider them as edges. This leads the concerned graphs to be trees of white nodes in which nodes with a degree 3 are considered\\
@@ -115,7 +115,7 @@ $\exists u = (u_0,u_1,u_2),v = (v_0,v_1,v_2) \in W $ with $u_i,v_i\in \{A,B,C\}$
 \end{itemize}
 In other words, for a node $u_i = \Phi(u)$ a configuration $u$ must exists such that $u_i$ can have 2 neighbors $u_a = \Phi(u)$ and $u_b = \Phi(u)$ and a neighbor $v_i = \Phi(v)$.
 The sames goes for a node $v_i = \Phi(v)$ where a configuration $v$ must exists such that $v_i$ can have 2 neighbors $v_a = \Phi(v)$ and $v_b = \Phi(v)$ and a neighbor $u_i = \Phi(u)$.\\\\
-If such requirements does not exists for a given problem, this implies that A' cannot have a correct output on $U_G$. By contraposition, $A$ must fails as well, we hence now that there exists a $log^*(n)$ lower bounds on the complexity of the problem.
+If such requirements does not exists for a given problem, this implies that A' cannot have a correct output on $U_G$. By contraposition, $A$ must fails as well, we hence now that there exists a $\log^*(n)$ lower bounds on the complexity of the problem.
 \begin{exmp}
 Let's take the following problem that encode the maximal independent set : $\Pi=(3,2,W,B)$ with :
 \begin{itemize}
@@ -129,5 +129,5 @@ For each white configuration, let's check if it match the requirements for $u$ o
     \item \textbf{BBC} : there is neither BB neither BC in $B$, again, BBC cannot have any neighbors labelled with the same configuration.
     \item \textbf{BCC} : Here we can see that $CC\in B$, let hence put that $u = BCC$ and $v = BCC$ since its the only configuration that allows a nodes to have 2 neighbors with the same configurations. however, we can see that $BB$ is not in $B$, a node of type $u$ cannot have a neighbor of type $v$. BCC is not fulfilling the requirements.
 \end{itemize}
-No configuration fulfill the requirements, the problem has a $log^*n$ lower bound.
+No configuration fulfill the requirements, the problem has a $\log^*n$ lower bound.
 \end{exmp}

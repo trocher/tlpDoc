@@ -1,7 +1,8 @@
 %!TEX root = main.tex
 \section{Generation of the problems}
+In the following we will be using the general form for the problems since we describe the classifier.
 \subsection{Non-reduced problem set}
-We first generate all the possible white (resp. black) configurations by computing all the 3-tuple $(x_1,x_2, x_3)$ such that sum of the 3 integer equal $\wdd$ (resp. $\bdd$).
+We first generate all the possible white (resp. black) configurations by computing all the 3-tuple $(x_0,x_1, x_2)$ such that sum of the 3 integer equal $\wdd$ (resp. $\bdd$).
 The powerset of this set will then be the set of all the possible \textit{white (resp. black) constraints}.
 The cartesian product between the set of white constraints and the set of black constraints represent all possible problems. The following table represent the number of problems depending on $\wdd$ and $\bdd$
 \begin{center}
@@ -33,14 +34,15 @@ In order to reduce the data set and avoid to classify problems that are equivale
 \end{tabular}
 \end{center}
 
-We can observe a set of problems 6 times smaller when $\wdd \neq \bdd$ (due to removing 5 of the 6 different permutations of the configurations tuples to only keep the characteristic problem) and 12 times smaller when $\wdd=\bdd$ due to the additional white/black symmetry
+When $\wdd \neq \bdd$ we can have equivalent set with a size of at most 6 (due to the 6 different permutations of the configurations). Because some equivalent set are smaller than 6 as we can see in the example \ref{exp_def_2}, the size of the problem sets happens to be between 5 and 6 times smaller than the non-reduced ones.\\\\
+When $\wdd=\bdd$,due to the additional white/black symmetry, it is between 11 and 12 times smaller. Indeed, for the same reasons stated above, it is not exactly 12 times smaller.
 
 \subsection{The constraint reduction algorithm}\label{sec:CR}
 
 \subsubsection{The algorithm}
-We are going to introduce an algorithm that, when applied to each of the problems of the data-set, will reduce its size again considering that a problem with some "useless" configurations has an equivalent complexity of the same problem reduced to only its "useful" configurations.\\
+We are going to introduce an algorithm that, when applied to each of the problems of the data-set, will reduce its size considering that a problem with some "useless" configurations has the same complexity than the same problem reduced to only its "useful" configurations.\\
 
-The algorithm consists in removing all the white and black configurations of a problem that cannot be used by any node by the problem. It appears that it can be used to show the solvability of a problem as it will be showed later, however it is also useful to have a better understanding of a problem still unclassified.
+The algorithm consists in removing all the white and black configurations of a problem that cannot be used by any node. It appears that it can be used to show the solvability of a problem as it will be showed later, however it is also useful to have a better understanding of a problem still unclassified.
 \begin{itemize}
     \item The algorithm takes as input a problem $\Pi = (\wdd,\bdd,W,B)$
     \item We start by looking at the set $S$ of labels that are in $A_{\Pi}$ but not in  $A_{\Pi,w} \cap A_{\Pi,b}$.
@@ -110,7 +112,7 @@ Setting a complexity $c$ to a problem is then similar to applying both of these 
 
 
 \section{The classification of binary labelling problems}\label{sec:BLP}
-As said in the introduction, a complete complexity classification of the problems using 1 or 2 labels already exists \cite{1}. In the case of the problems that are using 3 labels these results will be useful in two ways :
+As said in the introduction, a complete complexity classification of the problems using 1 or 2 labels already exists \cite{1}. In the case of the problems that are using 3 labels, these results will be useful in two ways :
 \begin{itemize}
     \item Since ternary labelling problems are always relaxations of some binary labelling problems, it provides some useful upper bounds for problems with 3 labels.
     \item As we will see, some 3 labelling problems can be equivalent to 2-labelling problems since some of their labels are in fact redundant. This would then lead to a tight bound.
@@ -119,11 +121,11 @@ As said in the introduction, a complete complexity classification of the problem
 The entire result of the binary labelling problems has been implemented in the classifier, despite providing nice upper bounds for ternary labelling problems, it is also possible to query the complexity of a binary labelling problem with white and black degrees unbounded.
 \subsection{Redundant labels}
 The idea here is that in some problems with $|A_{\Pi}|=3$, we could create a new problem with the same complexity by removing every configuration that uses a label $l_i$.\\
-In order to do that, there must be a label $l_j\neq l_i$ such that for every configuration $c=(x_{l_1},x_{l_2},x_{l_3})$ using $l_i$ ($x_{l_i}>0$), there must exist another configuration $c'=(x'_{l_1},x'_{l_2},x'_{l_3})$ such that : 
+In order to do that, there must be a label $l_j\neq l_i$ such that for every configuration $c=(x_{l_0},x_{l_1},x_{l_2})$ using $l_i$ ($x_{l_i}>0$), there must exist another configuration $c'=(x'_{l_0},x'_{l_1},x'_{l_2})$ such that : 
 \begin{itemize}
     \item $x'_{l_i}=0$
     \item $x'_{l_j}= x_{l_j}+x_{l_i}$
-    \item $x'_{l_k} = x_{l_k}$ where $ k = \Sigma \setminus \{l_i,l_j\}$ 
+    \item $x'_{l_k} = x_{l_k}$ where $ k \in \Sigma \setminus \{i,j\}$ 
 \end{itemize}
 In other words, each time a node is using a configuration using $l_i$ it could safely switch to a similar configuration using $l_j$ instead of $l_i$.
 We now prove that both the original problem $\Pi$ and the constructed binary labelling problem $\Pi'$ are equivalent.
@@ -182,11 +184,21 @@ In a similar way, we can run the python script \textit{classifier.py} with the d
 \begin{lstlisting}
 python3 classifier.py -w 3 -b 2 
 \end{lstlisting}
-Adding the "-s" with produce .txt files for each complexity containing all the problems that have been classified in it as well as a "unclassified" file containing both the lower bound and upper bound founds.
-\begin{lstlisting}
-python3 classifier.py -w 3 -b 2 -s
-\end{lstlisting}
+The following command will produce a json file in the output folder named $\wdd\_\bdd.json$ this files contain all the problems and their classification. It consist in a dictionary with the complexity as a key and a list of tuples that represent each problems having the corresponding complexity as value. 
+
 \subsection{Looking for problems}
-The file api.py provide a way to search for the complexity of a given problem and other useful methods that can be used to browse the problem set.
+The file api.py provide a way to search for the complexity of a given problem, even if it is not a representative problem, as well as other useful methods that can be used to browse the problem set.
+
+\section{Results}
+The classifier provides the following results when making it run with $\wdd = 3$, $\bdd = 2$ :
+\begin{itemize}
+    \item constant problems : 6472
+    \item iterated logarithmic problems : 14
+    \item logarithmic problems : 990
+    \item global problems : 153
+    \item unsolvable problems : 227
+    \item unclassified problems : 106
+\end{itemize}
+
 \section{The classification}
 In the next sections, we will try to explain what is done by the classifier and show why it is correct. We will focus on the problems that have a white degree $\wdd = 3$ and a black degree $\bdd = 2$
